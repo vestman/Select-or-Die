@@ -90,6 +90,7 @@
             background-image: -o-linear-gradient(bottom, rgba(241,241,241,.75) 0%, rgba(255,252,252,.75) 100%);
             background-image: -webkit-linear-gradient(bottom, rgba(241,241,241,.75) 0%, rgba(255,252,252,.75) 100%);
             background-image: linear-gradient(bottom, rgba(241,241,241,.75) 0%, rgba(255,252,252,.75) 100%);
+            border-color: #d4d4d4;
         }
 
         .sod_select.focus { box-shadow: 0 0 2px rgba(0,0,0,.1); }
