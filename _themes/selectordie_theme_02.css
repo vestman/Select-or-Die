@@ -65,9 +65,9 @@
             {
                 content: "\25BC";
                 right: 12px;
-                top: 15px;
+                top: 16px;
                 border-left: none;
-                font-size: 8px;
+                font-size: 7px;
             }
             .sod_select.above:after { content: "\25B2"; }
 
