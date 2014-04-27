@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>Select or Die</title>
+
+    <link href="http://fonts.googleapis.com/css?family=Cabin:400,600" rel="stylesheet" type="text/css">
+    <link href="../_src/selectordie.css" rel="stylesheet" type="text/css">
+    <link href="!inc/css/selectordie_theme_01.css" rel="stylesheet" type="text/css">
+    <link href="!inc/css/demo.css" rel="stylesheet" type="text/css">
+
+    <!-- <script src="!inc/js/jquery-2.1.0.min.js"></script> -->
+    <script src="!inc/js/jquery-1.8.0.min.js"></script>
+    <script src="!inc/js/jquery.litelighter.js"></script>
+    <script src="../_src/selectordie.min.js"></script>
+    <script src="!inc/js/demo.js"></script>
+
+</head>
+
+<body>
+
+    <section id="cover" class="cover">
+
+        <!-- Photo from https://www.flickr.com/photos/nlireland/11833296283/ - Found at http://nos.twnsnd.co/ -->
+
+        <select class="well_hello_there" data-placeholder="Select or Die" data-custom-class="cover_sod no_highlight">
+            <option value="#intro">What?</option>
+            <option value="#config">Config</option>
+            <option value="#methods">Methods</option>
+            <option value="#download">Download / Usage</option>
+        </select>
+
+    </section>
+
+
+    <section id="intro">
+
+        <div class="content">
+            <h1>What?</h1>
+            <p>Here we go again, yet another jQuery plugin to style <span class="option">&lt;select&gt;</span> elements. That's pretty much it. Scroll down and take a look if it might be something for you.</p>
+        </div>
+
+    </section>
+
+
+    <section id="config">
+
+        <div class="content">
+            <header>
+                <h1>Config</h1>
+                <p>A couple of configurable options to use with Select or Die (SoD).</p>
+            </header>
+
+            <table border="0" cellpadding="10" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th scope="col">Option</th>
+                        <th scope="col">Type</th>
+                        <th scope="col">Description</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td class="option"><a href="#custom" title="customID">customID</a></td>
+                        <td class="option">string</td>
+                        <td>
+                            <div class="hidden option">
+                                <a href="#custom" title="customID">customID</a> - <span class="type">string</span>
+                            </div>
+                            Add a custom class to the SoD element
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="option"><a href="#custom" title="customClass">customClass</a></td>
+                        <td class="option">string</td>
+                        <td>
+                            <div class="hidden option">
+                                <a href="#custom" title="customClass">customClass</a> - <span class="type">string</span>
+                            </div>
+                            Add a custom class to the SoD element
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="option"><a href="#placeholder" title="placeholder">placeholder</a></td>
+                        <td class="option">string</td>
+                        <td>
+                            <div class="hidden option">
+                                <a href="#placeholder" title="placeholder">placeholder</a> - <span class="type">string</span>
+                            </div>
+                            Add a placeholder that's show before a selection has been made
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="option"><a href="#prefix" title="prefix">prefix</a></td>
+                        <td class="option">string</td>
+                        <td>
+                            <div class="hidden option">
+                                <a href="#prefix" title="prefix">prefix</a> - <span class="type">string</span>
+                            </div>
+                            Add a prefix that's always shown before the selected option
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="option"><a href="#cycle" title="cycle">cycle</a></td>
+                        <td class="option">boolean</td>
+                        <td>
+                            <div class="hidden option">
+                                <a href="#cycle" title="cycle">cycle</a> - <span class="type">boolean</span>
+                            </div>
+                            Should the end user be able to cycle the list of options using his/hers arrow keys keyboard (keyboard support is always enabled)?
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="option"><a href="#links" title="links">links</a></td>
+                        <td class="option">boolean</td>
+                        <td>
+                            <div class="hidden option">
+                                <a href="#links" title="links">links</a> - <span class="type">boolean</span>
+                            </div>
+                            Treat the options as links?
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="option"><a href="#size" title="size">size</a></td>
+                        <td class="option">integer</td>
+                        <td>
+                            <div class="hidden option">
+                                <a href="#size" title="size">size</a> - <span class="type">integer</span>
+                            </div>
+                            Do you have a long list of options? Set the <span class="option">size</span> to control how many options that's visible in the SoD before the need to scrol
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="option"><a href="#tabindex" title="tabindex">tabindex</a></td>
+                        <td class="option">integer</td>
+                        <td>
+                            <div class="hidden option">
+                                <a href="#tabindex" title="tabindex">tabindex</a> - <span class="type">integer</span>
+                            </div>
+                            Set a custom tabindex on the SoD
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="option"><a href="#callback" title="onChange">onChange</a></td>
+                        <td class="option">function</td>
+                        <td>
+                            <div class="hidden option">
+                                <a href="#callback" title="onChange">onChange</a> - function
+                            </div>
+                            Provide a callback that will fire when a selection has been made
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p>There's also a couple of public methods available, more about them in the <a href="#methods">methods section</a> further down on the page.</p>
+        </div>
+
+    </section>
+
+
+    <section id="basic">
+
+        <div class="content arrow">
+            <header>
+                <h1>Basic example</h1>
+                <p>Apply the plugin and you're good to go.</p>
+            </header>
+
+            <code>
+                <pre>$("select").selectOrDie();</pre>
+            </code>
+        </div>
+
+        <div class="preview">
+            <select class="basic">
+                <option value="one">One</option>
+                <option value="two">Two</option>
+                <option value="three">Three</option>
+                <optgroup label="Option Group Label">
+                    <option value="group.one">Option Group.One</option>
+                    <option value="group.two">Option Group.Two</option>
+                </optgroup>
+                <option value="four">Four</option>
+                <option value="five">Five</option>
+            </select>
+        </div>
+
+    </section>
+
+
+    <section id="custom">
+
+        <div class="content arrow">
+            <header>
+                <h1>Custom class/ID</h1>
+                <p><span class="option">""</span> by default</p>
+                <p>Maybe you have multiple selects on the same page and one should look different, or whatever need you can find for a custom class/ID. In this example we're using a custom class give the SoD a different look.</p>
+            </header>
+
+            <code>
+                <pre>
+$("select").selectOrDie({
+    customClass: "custom",
+    customID:    "custom"
+});</pre>
+
+                <p>or</p>
+
+                <pre>
+$("select").selectOrDie();
+&lt;select data-custom-id="custom" data-custom-class="custom"&gt;</pre>
+            </code>
+        </div>
+
+        <div class="preview">
+            <select class="basic" data-custom-id="custom" data-custom-class="custom">
+                <option value="one">One</option>
+                <option value="two">Two</option>
+                <option value="three">Three</option>
+                <optgroup label="Option Group Label">
+                    <option value="group.one">Option Group.One</option>
+                    <option value="group.two">Option Group.Two</option>
+                </optgroup>
+                <option value="four">Four</option>
+                <option value="five">Five</option>
+            </select>
+        </div>
+
+    </section>
+
+
+    <section id="placeholder">
+
+        <div class="content arrow">
+            <header>
+                <h1>Placeholder</h1>
+                <p><span class="option">""</span> by default</p>
+                <p>If you feel like adding a placeholder that's displayed before anything is selected. Once a selection has been made the placeholder will be removed until the user clicks the SoD again, then it will be shown until the user makes a new selection or focus is lost on the SoD. The "placeholder" is given the class <span class="option">.sod_placeholder</span></p>
+            </header>
+
+            <code>
+                <pre>
+$("select").selectOrDie({
+    placeholder: "Choose a number"
+});</pre>
+
+                <p>or</p>
+
+                <pre>
+$("select").selectOrDie();
+&lt;select data-placeholder="Choose a number"&gt;</pre>
+            </code>
+        </div>
+
+        <div class="preview">
+            <select class="basic" data-placeholder="Choose a number">
+                <option value="one">One</option>
+                <option value="per" disabled>Niklas</option>
+                <option value="two">Two</option>
+                <option value="three">Three</option>
+                <option value="four">Four</option>
+                <option value="five">Five</option>
+            </select>
+        </div>
+
+    </section>
+
+
+    <section id="prefix">
+
+        <div class="content arrow">
+            <header>
+                <h1>Prefix</h1>
+                <p><span class="option">""</span> by default</p>
+                <p>Add a prefix that's displayed in front of the selected option. The "prefix" is given the class <span class="option">.sod_prefix</span>,</p>
+            </header>
+
+            <code>
+                <pre>
+$("select").selectOrDie({
+    prefix: "Number:"
+});</pre>
+
+                <p>or</p>
+
+                <pre>
+$("select").selectOrDie();
+&lt;select data-prefix="Number:"&gt;</pre>
+            </code>
+        </div>
+
+        <div class="preview">
+            <select class="basic" data-prefix="Number:">
+                <option value="one">One</option>
+                <option value="two">Two</option>
+                <option value="three">Three</option>
+                <option value="four">Four</option>
+                <option value="five">Five</option>
+            </select>
+        </div>
+
+    </section>
+
+
+    <section id="cycle">
+
+        <div class="content arrow">
+            <header>
+                <h1>Keyboard cycle</h1>
+                <p><span class="option">false</span> by default</p>
+                <p>When enabled it allows the user to cycle the list using his/hers arrow keys.</p>
+            </header>
+
+            <code>
+                <pre>
+$("select").selectOrDie({
+    cycle: true
+});</pre>
+
+                <p>or</p>
+
+                <pre>
+$("select").selectOrDie();
+&lt;select data-cycle="true"&gt;</pre>
+            </code>
+        </div>
+
+        <div class="preview">
+            <select class="basic" data-cycle="true">
+                <option value="one">One</option>
+                <option value="two">Two</option>
+                <option value="three">Three</option>
+                <option value="four">Four</option>
+                <option value="five">Five</option>
+            </select>
+        </div>
+
+    </section>
+
+
+    <section id="links">
+
+        <div class="content arrow">
+            <header>
+                <h1>Links</h1>
+                <p><span class="option">false</span> by default</p>
+                <p>When set to <span class="option">true</span> the user will be redirected to the URL specified in the <span class="option">&lt;option value=""&gt;</span>.</p>
+            </header>
+
+            <code>
+                <pre>
+$("select").selectOrDie({
+    links: true,
+    placeholder: "Go to...",
+    customClass: "no_highlight"
+});</pre>
+
+                <p>or</p>
+
+                <pre>
+$("select").selectOrDie();
+&lt;select data-links="true" data-placeholder="Go to..." data-custom-class="no_highlight"&gt;</pre>
+            </code>
+        </div>
+
+        <div class="preview">
+            <select class="basic" data-links="true" data-placeholder="Go to..." data-custom-class="no_highlight">
+                <option value="https://github.com/vestman/">GitHub</option>
+                <option value="http://dribbble.com/MyBeardAndI/">Dribbble</option>
+                <option value="http://twitter.com/MyBeardAndI">Twitter</option>
+            </select>
+        </div>
+
+    </section>
+
+
+    <section id="size">
+
+        <div class="content arrow">
+            <header>
+                <h1>Size</h1>
+                <p><span class="option">0</span> by default</p>
+                <p>The select below consists of 10 options, but since the size is set to 4 it will only show 4 before you have to scroll (or use your up/down keys) to see the rest of the options.</p>
+            </header>
+
+            <code>
+                <pre>
+$("select").selectOrDie({
+    size: 5
+});</pre>
+
+                <p>or</p>
+
+                <pre>
+$("select").selectOrDie();
+&lt;select data-size="5"&gt;</pre>
+            </code>
+        </div>
+
+        <div class="preview">
+            <select class="basic" data-size="5">
+                <option value="one">One</option>
+                <option value="two">Two</option>
+                <option value="three">Three</option>
+                <option value="four">Four</option>
+                <option value="five">Five</option>
+                <option value="six">Six</option>
+                <option value="seven">Seven</option>
+                <option value="eight">Eight</option>
+                <option value="Nine">Nine</option>
+                <option value="Ten">Ten</option>
+                <option value="Eleven">Eleven</option>
+                <option value="Twelve">Twelve</option>
+                <option value="Thirteen">Thirteen</option>
+                <option value="Fourteen">Fourteen</option>
+                <option value="Fifteen">Fifteen</option>
+            </select>
+        </div>
+
+    </section>
+
+
+    <section id="tabindex">
+
+        <div class="content arrow">
+            <header>
+                <h1>Tabindex</h1>
+                <p><span class="option">0</span> by default</p>
+                <p>The SoD will grab the <span class="option">tabindex</span> set on the native select, but you can override the default tabindex by specifying a custom one. If no tabindex is set on the native select or no custom tabindex is defined then the tabindex of the SoD will be set to <span class="option">0</span></p>
+            </header>
+
+            <code>
+                <pre>
+$("select").selectOrDie({
+    tabindex: 10
+});</pre>
+
+                <p>or</p>
+
+                <pre>
+$("select").selectOrDie();
+&lt;select data-tabindex="10"&gt;</pre>
+            </code>
+        </div>
+
+        <div class="preview">
+            <select class="basic" data-tabindex="10">
+                <option value="one">One</option>
+                <option value="two">Two</option>
+                <option value="three">Three</option>
+                <option value="four">Four</option>
+                <option value="five">Five</option>
+            </select>
+        </div>
+
+    </section>
+
+
+    <section id="callback">
+
+        <div class="content arrow">
+            <header>
+                <h1>Callback</h1>
+                <p><span class="option">$.noop</span> by default</p>
+                <p>So you want to do something after the user has made a selection? Go ahead.</p>
+            </header>
+
+            <code>
+                <pre>
+$("select").selectOrDie({
+    onChange: function() { alert( $(this).val() ) }
+});</pre>
+            </code>
+        </div>
+
+        <div class="preview">
+            <select class="callback">
+               <option value="one">One</option>
+                <option value="two">Two</option>
+                <option value="three">Three</option>
+                <option value="four">Four</option>
+                <option value="five">Five</option>
+            </select>
+        </div>
+
+    </section>
+
+
+    <section id="methods">
+
+        <div class="content">
+            <header>
+                <h1>Methods</h1>
+                <p>These might come in handy one day. Click the different methods below to see them in action.</p>
+            </header>
+
+            <table border="0" cellpadding="10" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th scope="col">Method</th>
+                        <th scope="col">Description</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td class="option"><a href="#destroy" title="destroy">destroy</a></td>
+                        <td>
+                            <a href="#destroy" class="hidden option" title="destroy">destroy</a>
+                            Kills the SoD element and restore everything back to normal
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="option"><a href="#update" title="update">update</a></td>
+                        <td>
+                            <a href="#update" class="hidden option" title="update">update</a>
+                            Update the SoD to reflect changes made to the native <span class="option">&lt;select&gt;</span>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="option"><a href="#disable_enable" title="disable">disable</a></td>
+                        <td>
+                            <a href="#disable_enable" class="hidden option" title="disable">disable</a>
+                            Disable the SoD (and the native <span class="option">&lt;select&gt;</span>), an entire option group or an option
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="option"><a href="#disable_enable" title="enable">enable</a></td>
+                        <td>
+                            <a href="#disable_enable" class="hidden option" title="enable">enable</a>
+                            Enable the SoD (and the native <span class="option">&lt;select&gt;</span>), an entire option group or an option
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </section>
+
+
+    <section id="destroy">
+
+        <div class="content arrow">
+            <header>
+                <h1>Destroy</h1>
+                <p>Destroy the SoD and remove all traces of it.</p>
+            </header>
+
+            <div class="actions">
+                <span class="trigger" data-method="destroy">
+                    <span>Destroy</span>
+                    <span class="hidden">Initiate</span>
+                    the SoD
+                </span>
+            </div>
+
+            <code>
+                <pre>$("select").selectOrDie();</pre>
+            </code>
+        </div>
+
+        <div class="preview">
+            <select class="basic">
+                <option value="one">One</option>
+                <option value="two">Two</option>
+                <option value="three">Three</option>
+                <option value="four">Four</option>
+                <option value="five">Five</option>
+            </select>
+        </div>
+
+    </section>
+
+
+    <section id="update">
+
+        <div class="content arrow">
+            <header>
+                <h1>Update</h1>
+                <p>Lets say an option have been added to the native <span class="option">&lt;select&gt;</span>, then you might want to update the SoD to reflect the native <span class="option">&lt;select&gt;</span>. Then it's just a matter of running the <span class="option">update</span> method and the SoD will update with the new option.</p>
+            </header>
+
+            <div class="actions">
+                <span class="trigger" data-method="update">Append an option and update the SoD</span>
+            </div>
+
+            <code>
+                <pre>$("select").selectOrDie();</pre>
+            </code>
+        </div>
+
+        <div class="preview">
+            <select class="basic">
+                <option value="one">One</option>
+                <option value="two">Two</option>
+                <option value="three">Three</option>
+            </select>
+        </div>
+
+    </section>
+
+    <section id="disable_enable">
+
+        <div class="content arrow">
+            <header>
+                <h1>Disable / Enable</h1>
+                <p>If you need to disable/enable a SoD or any of its option groups/options manually, then use the <span class="option">disable</span> or <span class="option">enable</span> method.</p>
+            </header>
+
+            <div class="actions">
+                <span class="trigger" data-method="disable">
+                    <span>Disable</span>
+                    <span class="hidden">Enable</span>
+                    the SoD
+                </span>
+
+                <label for="enable_disable">
+                    <span class="trigger" data-sub-method="option" data-method="disable">
+                        <span>Disable</span>
+                        <span class="hidden">Enable</span>
+                        option "Three"
+                    </span>
+                </label>
+
+                <label for="enable_disable">
+                    <span class="trigger" data-sub-method="group" data-method="disable">
+                        <span>Disable</span>
+                        <span class="hidden">Enable</span>
+                        optgroup "Option Group Label"
+                    </span>
+                </label>
+            </div>
+
+            <code>
+                <pre>$("select").selectOrDie();</pre>
+            </code>
+        </div>
+
+        <div class="preview">
+            <select class="basic" id="enable_disable">
+                <option value="one">One</option>
+                <option value="two">Two</option>
+                <option value="three">Three</option>
+                <optgroup label="Option Group Label">
+                    <option value="group.one">Option Group.One</option>
+                    <option value="group.two">Option Group.Two</option>
+                </optgroup>
+                <option value="four">Four</option>
+                <option value="five">Five</option>
+            </select>
+        </div>
+
+    </section>
+
+
+    <section id="download">
+
+        <div class="content">
+            <header>
+                <h1>Download / Usage</h1>
+            </header>
+
+            <p>Download the .zip file by clicking the download button below. Once downloaded, unzip it and include the <span class="option">selectordie.css</span> and either of the two <span class="option">.js</span> files found in the "_src" folder. Initialize the plugin, targeting the desired element in the jQuery selector. Just like in the <a href="#basic">basic</a> example above. Then you're all good!</p>
+
+            <p class="buttons">
+                <a href="https://github.com/vestman/Select-or-Die/archive/master.zip" class="external button">Download</a>
+                <a href="https://github.com/vestman/Select-or-Die/fork" class="external button">Fork</a>
+            </p>
+        </div>
+
+    </section>
+
+
+    <section id="various">
+
+        <div class="content arrow">
+            <header>
+                <h1>Various</h1>
+            </header>
+
+            <ul class="list">
+                <li>Touch devices triggers the native select element</li>
+                <li>SoD will automatically detect a disabled <span class="option">&lt;select&gt;</span>, the same goes for option groups and options</li>
+                <li>When in focus (the SoD gets focus when tabbing to it or clicking it) you can use your keys to "search" the SoD, just like a native <span class="option">&lt;select&gt;</span></li>
+                <li>Option groups (<span class="option">&lt;optgroup&gt;</span>) are given the class <span class="option">.optgroup</span> and its children the class <span class="option">.groupchild</span></li>
+                <li>Options that won't fit the width of the SoD gets automatically truncated</li>
+                <li>SoD will detect if any part of the options list is below the user viewport. If it is the list will be shown above the SoD</li>
+                <li>You can pass a custom class or ID to individual options in the SoD by adding either <span class="option">data-custom-class</span> or <span class="option">data-custom-id</span> to an option in the native select</li>
+                <li>You can set a single option to act as a link without using the <a href="#links" title="links">links</a> option. To do so you add a <span class="option">data-link="true"</span> to the specific option in the native select</li>
+                <li>If you add the class <span class="option">.no_highlight</span> as a custom class to your SoD then the default check mark highlighting the selected option will not be displayed</li>
+                <li><span class="option">&lt;label&gt;</span> elements targeting the native select will set focus on the SoD. Once a SoD has focus the user can press the space bar to open it or use the arrow keys to move around in the SoD. Give it a try: <label for="label_test" class="action">I'm a label</label> for the SoD below</li>
+            </ul>
+        </div>
+
+        <div class="preview">
+            <select class="basic" id="label_test">
+                <option value="one">One</option>
+                <option value="two" disabled="disabled">Two (disabled)</option>
+                <option value="three">Three</option>
+                <optgroup label="Option Group Label (disabled)" disabled="disabled">
+                    <option value="group.one">Option Group.One</option>
+                    <option value="group.two">Option Group.Two</option>
+                </optgroup>
+                <option value="four">Four (selected), and a bit too long for its own good</option>
+                <option value="five">Five</option>
+                <option value="six" data-custom-class="bones">Six (custom class)</option>
+                <option value="http://www.google.com/" data-link="true">Seven (link to google.com)</option>
+                <option value="eight">Eight</option>
+            </select>
+        </div>
+
+    </section>
+
+
+    <section id="todo">
+
+        <div class="content">
+            <header>
+                <h1>Todo</h1>
+                <p>There's probably a ton of things to do/fix, but here's a couple:</p>
+            </header>
+
+            <ul class="list">
+                <li>Add support for <span class="option">&lt;select multiple&gt;</span></li>
+                <li>Fix typos/grammar in this demo. If you spot any, feel free to send me an email.</li>
+            </ul>
+        </div>
+
+    </section>
+
+
+    <section id="history">
+
+        <div class="content">
+            <header>
+                <h1>Version History / Compability</h1>
+                <p>I'll try to keep it short.</p>
+            </header>
+
+            <table border="0" cellpadding="10" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th scope="col">Version</th>
+                        <th scope="col">Description</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td class="option">0.1.0</td>
+                        <td>
+                            <span class="hidden option">0.1.0</span>
+                            The SoD got an overhaul and faced the wrath of the Internet for the first time
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="option">0.0.666</td>
+                        <td>
+                            <span class="hidden option">0.0.666</span>
+                            Initial release
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <ul class="list">
+                <li>Tested with jQuery v1.8 and jQuery v2.1 and nothing in between (it should work just fine with a version in between the tested versions). Please note that if you use jQuery 2.x IE8 will not be supported, you can read more about this over att the <a class="external" href="http://blog.jquery.com/2013/04/18/jquery-2-0-released/" title="http://blog.jquery.com/2013/04/18/jquery-2-0-released/">jQuery blog</a>.</li>
+                <li>Tested in Firefox / Chrome / Safari / Opera / IE8+</li>
+                <li>This demo is using <a class="external" href="http://trentrichardson.com/examples/jQuery-Litelighter/" title="http://trentrichardson.com/examples/jQuery-Litelighter/">jQuery Litelighter</a> by Trent Richardson. The jQuery Litelighter is NOT required by Select or Die, it's just used to format the code blocks in this demo.</li>
+                <li>Cover photo found over at <a class="external" href="http://nos.twnsnd.co/image/81190207271" title="http://nos.twnsnd.co/image/81190207271">New Old Stock</a></li>
+            </ul>
+        </div>
+
+    </section>
+
+</body>
+</html>
