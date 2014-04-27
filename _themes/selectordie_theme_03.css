@@ -1,7 +1,7 @@
 /* ===========================================================
  *
  *  Name:          selectordie_theme_03.css
- *  Updated:       2014-04-06
+ *  Updated:       2014-04-27
  *  Created by:    Per V @ Vst.mn
  *  What?:         Custom "theme" for Select or Die
  *                 To use this theme, include this file
@@ -10,6 +10,9 @@
  *
  *  Beards, Rock & Loud Guns | Cogs 'n Kegs
  * =========================================================== */
+
+/* Remove, change to fit your needs */
+@import url(http://fonts.googleapis.com/css?family=Lato:400,700);
 
 .sod_select,
 .sod_select *
@@ -36,7 +39,7 @@
         border-radius: 3px;
         color: #828282;
         font-size: 11px;
-        font-weight: 600;
+        font-weight: 400;
         text-align: left;
         text-transform: uppercase;
         outline: 0;
@@ -121,6 +124,7 @@
             height: auto;
             width: 200px;
             margin: 0 0 0 -1px;
+            background: #ffffff;
             border: 1px solid #dbdbdb;
             border-top: none;
             border-radius: 0 0 3px 3px;
@@ -220,7 +224,11 @@
                 }
 
             /*Make room for the check mark */
-            .sod_select .sod_list .selected { padding-right: 30px; }
+            .sod_select .sod_list .selected
+                {
+                    padding-right: 30px;
+                    font-weight: 700;
+                }
 
                 /* Displays a check mark for the selected option */
                 .sod_select .sod_list .selected:before

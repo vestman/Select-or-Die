@@ -1,7 +1,7 @@
 /* ===========================================================
  *
  *  Name:          selectordie_theme_02.css
- *  Updated:       2014-04-06
+ *  Updated:       2014-04-27
  *  Created by:    Per V @ Vst.mn
  *  What?:         Custom "theme" for Select or Die
  *                 To use this theme, include this file
@@ -10,6 +10,9 @@
  *
  *  Beards, Rock & Loud Guns | Cogs 'n Kegs
  * =========================================================== */
+
+/* Remove, change to fit your needs */
+@import url(http://fonts.googleapis.com/css?family=Lato:300,700);
 
 .sod_select,
 .sod_select *
@@ -33,11 +36,11 @@
         padding: 13px 10px;
         background: #fcfcfc;
         border: 1px solid #d4d4d4;
-        box-shadow: inset 0 -2px 5px rgba(0,0,0,.05);
+        box-shadow: inset 0 -1px 2px rgba(0,0,0,.05);
         border-radius: 3px;
-        color: #676767;
+        color: #808080;
         font-size: 12px;
-        font-weight: 600;
+        font-weight: 700;
         text-align: left;
         text-transform: none;
         outline: 0;
@@ -78,7 +81,7 @@
         }
 
         .sod_select.open { color: #919191; }
-        .sod_select.focus { box-shadow: inset 0 -2px 5px rgba(0,0,0,.05), 0 0 2px rgba(0,0,0,.1); }
+        .sod_select.focus { box-shadow: inset 0 -1px 2px rgba(0,0,0,.05), 0 0 5px rgba(0,0,0,.1); }
 
     /* When the entire SoD is disabled, go crazy! */
     .sod_select.disabled
@@ -119,8 +122,8 @@
             border-radius: 3px;
             box-shadow: 0 2px 4px rgba(0,0,0,.1);
             background: #ffffff;
-            color: #676767;
-            font-weight: 400;
+            color: #808080;
+            font-weight: 300;
             z-index: 1;
         }
 
@@ -239,14 +242,14 @@
                 {
                     background: #f7f7f7;
                     border-radius: 3px;
-                    color: #333333;
+                    color: #676767;
                 }
 
             /*Make room for the check mark */
             .sod_select .sod_list .selected
                 {
                     padding-right: 25px;
-                    font-weight: 600;
+                    font-weight: 700;
                 }
 
                 /* Displays a check mark for the selected option */

@@ -1,11 +1,11 @@
 /* ===========================================================
  *
- *  Name:          selectordie_theme_01.css
- *  Updated:       2014-04-06
+ *  Name:          selectordie_theme_02.css
+ *  Updated:       2014-04-27
  *  Created by:    Per V @ Vst.mn
  *  What?:         Custom "theme" for Select or Die.
- *                 This is the same as theme_01.css found
- *                 in the "_themes" folder. The only
+ *                 This is pretty much same as theme_02.css
+ *                 found in the "_themes" folder. The only
  *                 difference is that it has .cusom appended
  *                 to all the selectors. .
  *
@@ -13,19 +13,9 @@
  *  Beards, Rock & Loud Guns | Cogs 'n Kegs
  * =========================================================== */
 
-.sod_select.custom,
-.sod_select.custom *
-    {
-        -webkit-box-sizing: border-box;
-           -moz-box-sizing: border-box;
-                box-sizing: border-box;
-        -webkit-user-select: none;
-           -moz-user-select: none;
-            -ms-user-select: none;
-    }
 
 /* The SoD - Please keep this first three lines intact, otherwise all hell will break looooooose */
-.sod_select.custom
+.sod_select.custom.custom
     {
         display: inline-block;
         position: relative;
@@ -33,21 +23,13 @@
 
         width: 200px;
         padding: 13px 10px;
-
-        background-color: #ffffff;
-        background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEwMCAxMDAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iaGF0MCIgZ3JhZGllbnRVbml0cz0ib2JqZWN0Qm91bmRpbmdCb3giIHgxPSI1MCUiIHkxPSIxMDAlIiB4Mj0iNTAlIiB5Mj0iLTEuNDIxMDg1NDcxNTIwMmUtMTQlIj4KPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2Y3ZjdmNyIgc3RvcC1vcGFjaXR5PSIxIi8+CjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2ZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgIDwvbGluZWFyR3JhZGllbnQ+Cgo8cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0idXJsKCNoYXQwKSIgLz4KPC9zdmc+);
-        background-image: -moz-linear-gradient(bottom, #f7f7f7 0%, #fff 100%);
-        background-image: -o-linear-gradient(bottom, #f7f7f7 0%, #fff 100%);
-        background-image: -webkit-linear-gradient(bottom, #f7f7f7 0%, #fff 100%);
-        background-image: linear-gradient(bottom, #f7f7f7 0%, #fff 100%);
-        -webkit-background-clip: padding-box;
-           -moz-background-clip: padding;
-                background-clip: padding-box;
-        border: 1px solid #dbdbdb;
+        background: #fcfcfc;
+        border: 1px solid #d4d4d4;
+        box-shadow: inset 0 -1px 2px rgba(0,0,0,.05);
         border-radius: 3px;
-        color: #797979;
+        color: #808080;
         font-size: 12px;
-        font-weight: 600;
+        font-weight: 700;
         text-align: left;
         text-transform: none;
         outline: 0;
@@ -62,9 +44,9 @@
             content: "";
             position: absolute;
             right: 30px;
-            top: 0;
-            bottom: 0;
-            border-left: 1px solid #dbdbdb;
+            top: 10px;
+            bottom: 10px;
+            border-left: 1px solid #e5e5e5;
         }
 
         /* Down arrow */
@@ -74,46 +56,31 @@
                 right: 12px;
                 top: 15px;
                 border-left: none;
-                color: #bbbbbb;
                 font-size: 8px;
             }
+            .sod_select.custom.above:after { content: "\25B2"; }
 
     /* Change the border color on hover, focus and when open */
     .sod_select.custom:hover,
-    .sod_select.custom.focus,
-    .sod_select.custom.disabled,
-    .sod_select.custom.disabled:hover
+    .sod_select.custom.open,
+    .sod_select.custom.focus
         {
-            background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEwMCAxMDAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iaGF0MCIgZ3JhZGllbnRVbml0cz0ib2JqZWN0Qm91bmRpbmdCb3giIHgxPSI1MCUiIHkxPSIxMDAlIiB4Mj0iNTAlIiB5Mj0iLTEuNDIxMDg1NDcxNTIwMmUtMTQlIj4KPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2YxZjFmMSIgc3RvcC1vcGFjaXR5PSIwLjc1Ii8+CjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2ZmZmNmYyIgc3RvcC1vcGFjaXR5PSIwLjc1Ii8+CiAgIDwvbGluZWFyR3JhZGllbnQ+Cgo8cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0idXJsKCNoYXQwKSIgLz4KPC9zdmc+);
-            background-image: -moz-linear-gradient(bottom, rgba(241,241,241,.75) 0%, rgba(255,252,252,.75) 100%);
-            background-image: -o-linear-gradient(bottom, rgba(241,241,241,.75) 0%, rgba(255,252,252,.75) 100%);
-            background-image: -webkit-linear-gradient(bottom, rgba(241,241,241,.75) 0%, rgba(255,252,252,.75) 100%);
-            background-image: linear-gradient(bottom, rgba(241,241,241,.75) 0%, rgba(255,252,252,.75) 100%);
+            background: #ffffff;
+            border-color: #d4d4d4;
         }
 
-        .sod_select.custom.focus { box-shadow: 0 0 2px rgba(0,0,0,.1); }
-
-        .sod_select.custom.open
-            {
-                border-radius: 3px 3px 0 0;
-                box-shadow: 1px 2px 5px rgba(0,0,0,.1);
-                color: #919191;
-            }
-
-            .sod_select.custom.open.above
-                {
-                    border-radius: 0 0 3px 3px;
-                    box-shadow: 1px -2px 5px rgba(0,0,0,.1);
-                }
+        .sod_select.custom.open { color: #919191; }
+        .sod_select.custom.focus { box-shadow: inset 0 -1px 2px rgba(0,0,0,.05), 0 0 5px rgba(0,0,0,.1); }
 
     /* When the entire SoD is disabled, go crazy! */
-    .sod_select.custom.disabled,
-    .sod_select.custom.disabled:hover
+    .sod_select.custom.disabled
         {
-            opacity: .8;
+            border-color: #d4d4d4;
             color: #b2b2b2;
             cursor: not-allowed;
         }
+
+        .sod_select.custom.disabled:hover { background: #fcfcfc; }
 
     /* The "label", or whatever we should call it. Keep the first three lines for truncating. */
     .sod_select.custom .sod_label
@@ -122,11 +89,11 @@
             white-space: nowrap;
             text-overflow: ellipsis;
 
-            padding-right: 25px;
+            padding-right: 15px;
         }
 
-        .sod_select .sod_prefix { /* Use this if you're using a prefix and want to style it */ }
-        .sod_select .sod_placeholder { /* Use this if you're using a placeholder and want to style it */ }
+        .sod_select.custom .sod_prefix { /* Use this if you're using a prefix and want to style it */ }
+        .sod_select.custom .sod_placeholder { /* Use this if you're using a placeholder and want to style it */ }
 
 
 
@@ -139,13 +106,13 @@
             display: none;
             height: auto;
             width: 200px;
-            margin: 0 0 0 -1px;
-            border: 1px solid #dbdbdb;
-            border-radius: 0 0 3px 3px;
-            box-shadow: 1px 2px 5px rgba(0,0,0,.1);
+            margin: 10px 0 0 -1px;
+            border: 1px solid #d4d4d4;
+            border-radius: 3px;
+            box-shadow: 0 2px 4px rgba(0,0,0,.1);
             background: #ffffff;
-            color: #676767;
-            font-weight: 400;
+            color: #808080;
+            font-weight: 300;
             z-index: 1;
         }
 
@@ -156,21 +123,71 @@
         .sod_select.custom.disabled.open .sod_list { display: none;  }
 
         /* When the option list is displayed above the SoD */
-        .sod_select.custom.custom.above .sod_list
+        .sod_select.custom.above .sod_list
             {
                 top: auto;
                 bottom: 100%;
-                border-radius: 3px 3px 0 0;
-                box-shadow: 1px -2px 5px rgba(0,0,0,.1);
+                margin: 0 0 10px -1px;
+                border: 1px solid #d4d4d4;
+                box-shadow: 0 -2px 4px rgba(0,0,0,.1);
             }
+
+        /* Arrow(s) displayed when the SoD is active, only in this "theme" */
+        .sod_select.custom .sod_list:after,
+        .sod_select.custom .sod_list:before
+            {
+                content: "";
+                position: absolute;
+                bottom: 100%;
+                right: 10px;
+                border: solid transparent;
+                height: 0;
+                width: 0;
+                pointer-events: none;
+            }
+
+            .sod_select.custom.above .sod_list:after,
+            .sod_select.custom.above .sod_list:before
+                {
+                    top: 100%;
+                    bottom: auto;
+                }
+
+        .sod_select.custom .sod_list:after
+            {
+                border-color: rgba(255, 255, 255, 0);
+                border-bottom-color: #ffffff;
+                border-width: 6px;
+            }
+
+            .sod_select.custom.above .sod_list:after
+                {
+                    border-color: rgba(255, 255, 255, 0);
+                    border-top-color: #ffffff;
+                }
+
+        .sod_select.custom .sod_list:before
+            {
+                margin-right: -2px;
+                border-color: rgba(212, 212, 212, 0);
+                border-bottom-color: #d4d4d4;
+                border-width: 8px;
+            }
+
+            .sod_select.custom.above .sod_list:before
+                {
+                    border-color: rgba(255, 255, 255, 0);
+                    border-top-color: #d4d4d4;
+                }
 
 
     /* Options list container */
     .sod_select.custom .sod_list ul
         {
             overflow-y: auto;
-            padding: 0;
-            margin: 0;
+            padding: 0 4px;
+            margin: 4px 0;
+            border-radius: 3px;
         }
 
         /* All the options. Keep the first three lines for truncating... */
@@ -181,9 +198,13 @@
                 text-overflow: ellipsis;
 
                 position: relative;
-                padding: 10px 10px 10px 25px;
+                padding: 10px;
                 list-style-type: none;
+                border-bottom: 1px solid #f7f7f7;
             }
+
+            /* Remove the bottom border from the last item */
+            .sod_select.custom .sod_list li:last-child { border-bottom: none; }
 
             /* Optgroups */
             .sod_select.custom .sod_list .optgroup,
@@ -191,12 +212,12 @@
                 {
                     background: inherit;
                     color: #939393;
-                    font-size: 11px;
+                    font-size: 10px;
                     font-style: italic;
                 }
 
                 /* Children of an optgroup */
-                .sod_select.custom .sod_list .groupchild { padding-left: 35px; }
+                .sod_select.custom .sod_list .groupchild { padding-left: 20px; }
 
             /* Disabled option */
             .sod_select.custom .sod_list .disabled
@@ -208,19 +229,24 @@
             /* Hover state for options, also used when a user uses his/hers up/down keys */
             .sod_select.custom .sod_list .active
                 {
-                    background: #366fb5;
-                    color: #ffffff;
+                    background: #f7f7f7;
+                    border-radius: 3px;
+                    color: #676767;
                 }
 
             /*Make room for the check mark */
-            .sod_select.custom .sod_list .selected { font-weight: 600; }
+            .sod_select.custom .sod_list .selected
+                {
+                    padding-right: 25px;
+                    font-weight: 700;
+                }
 
                 /* Displays a check mark for the selected option */
                 .sod_select.custom .sod_list .selected:before
                     {
                         content: "";
                         position: absolute;
-                        left: 10px;
+                        right: 10px;
                         top: 50%;
                         -webkit-transform: translateY(-50%);
                             -ms-transform: translateY(-50%);

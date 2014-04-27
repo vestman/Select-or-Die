@@ -11,6 +11,9 @@
  *  Beards, Rock & Loud Guns | Cogs 'n Kegs
  * =========================================================== */
 
+/* Remove, change to fit your needs */
+@import url(http://fonts.googleapis.com/css?family=Lato:300,700);
+
 .sod_select,
 .sod_select *
     {
@@ -45,7 +48,7 @@
         border-radius: 3px;
         color: #797979;
         font-size: 12px;
-        font-weight: 600;
+        font-weight: 700;
         text-align: left;
         text-transform: none;
         outline: 0;
@@ -94,15 +97,10 @@
         .sod_select.open
             {
                 border-radius: 3px 3px 0 0;
-                box-shadow: 1px 2px 5px rgba(0,0,0,.1);
                 color: #919191;
             }
 
-            .sod_select.open.above
-                {
-                    border-radius: 0 0 3px 3px;
-                    box-shadow: 1px -2px 5px rgba(0,0,0,.1);
-                }
+            .sod_select.open.above { border-radius: 0 0 3px 3px; }
 
     /* When the entire SoD is disabled, go crazy! */
     .sod_select.disabled,
@@ -143,7 +141,7 @@
             box-shadow: 1px 2px 5px rgba(0,0,0,.1);
             background: #ffffff;
             color: #676767;
-            font-weight: 400;
+            font-weight: 300;
             z-index: 1;
         }
 
@@ -211,7 +209,7 @@
                 }
 
             /*Make room for the check mark */
-            .sod_select .sod_list .selected { font-weight: 600; }
+            .sod_select .sod_list .selected { font-weight: 700; }
 
                 /* Displays a check mark for the selected option */
                 .sod_select .sod_list .selected:before
