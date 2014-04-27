@@ -412,7 +412,7 @@
 
                 // This was fun, lets do it again and again.
                 $_sodViewportTimeout = setTimeout( function() {
-                    _private.checkViewport($sod, $sodList)
+                    _private.checkViewport($sod, $sodList);
                 }, 200);
             }, // checkViewport
 
