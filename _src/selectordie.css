@@ -15,7 +15,7 @@
  * =========================================================== */
 
 /* Remove, change to fit your needs */
-@import url(http://fonts.googleapis.com/css?family=Lato:700);
+@import url(http://fonts.googleapis.com/css?family=Lato:300,700);
 
 .sod_select,
 .sod_select *
@@ -113,6 +113,7 @@
             border: 3px solid #000000;
             border-top: none;
             color: #444444;
+            font-weight: 300;
             z-index: 1;
         }
 
@@ -179,7 +180,11 @@
                 }
 
             /*Make room for the check mark */
-            .sod_select .sod_list .selected { padding-right: 25px; }
+            .sod_select .sod_list .selected
+                {
+                    font-weight: 700;
+                    padding-right: 25px;
+                }
 
                 /* Displays a check mark for the selected option */
                 .sod_select .sod_list .selected:before
