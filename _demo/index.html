@@ -117,7 +117,7 @@
                             <div class="hidden option">
                                 <a href="#cycle" title="cycle">cycle</a> - <span class="type">boolean</span>
                             </div>
-                            Should the end user be able to cycle the list of options using his/hers arrow keys keyboard (keyboard support is always enabled)?
+                            Keyboard support is always enabled, but if you set this to <span class="option">true</span> the end user will be able to cycle the list of options. Example: when you've reach the bottom of the list and press the down/right arrow key it will jump back up to the first option.
                         </td>
                     </tr>
 
@@ -129,6 +129,17 @@
                                 <a href="#links" title="links">links</a> - <span class="type">boolean</span>
                             </div>
                             Treat the options as links?
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="option"><a href="#links" title="links">linksExternal</a></td>
+                        <td class="option">boolean</td>
+                        <td>
+                            <div class="hidden option">
+                                <a href="#links" title="links">links</a> - <span class="type">boolean</span>
+                            </div>
+                            Treat the options as external links?
                         </td>
                     </tr>
 
@@ -356,9 +367,10 @@ $("select").selectOrDie();
 
         <div class="content arrow">
             <header>
-                <h1>Links</h1>
+                <h1>Links / External links</h1>
                 <p><span class="option">false</span> by default</p>
-                <p>When set to <span class="option">true</span> the user will be redirected to the URL specified in the <span class="option">&lt;option value=""&gt;</span>.</p>
+                <p>There's two different ways of defining links. By using <span class="option">links</span> the links will open in the same window/tab, if you use <span class="option">linksExternal</span> the links will be opened in a new window/tab.</p>
+                <p>You can also define a specific option to act as a link by adding a data attribute to the specific option in the native select. More on that in the <a href="#various">various</a> section below.</p>
             </header>
 
             <code>
@@ -701,9 +713,9 @@ $("select").selectOrDie({
                 <li>When in focus (the SoD gets focus when tabbing to it or clicking it) you can use your keys to "search" the SoD, just like a native <span class="option">&lt;select&gt;</span></li>
                 <li>Option groups (<span class="option">&lt;optgroup&gt;</span>) are given the class <span class="option">.optgroup</span> and its children the class <span class="option">.groupchild</span></li>
                 <li>Options that won't fit the width of the SoD gets automatically truncated</li>
-                <li>SoD will detect if any part of the options list is below the user viewport. If it is the list will be shown above the SoD</li>
+                <li>SoD will detect if any part of the options list is below the user viewport. If it is and it will fit above it will be shown above the SoD</li>
                 <li>You can pass a custom class or ID to individual options in the SoD by adding either <span class="option">data-custom-class</span> or <span class="option">data-custom-id</span> to an option in the native select</li>
-                <li>You can set a single option to act as a link without using the <a href="#links" title="links">links</a> option. To do so you add a <span class="option">data-link="true"</span> to the specific option in the native select</li>
+                <li>You can set a single option to act as a link without using the <a href="#links" title="links">links</a> option. To do so you add either <span class="option">data-link="true"</span> or <span class="option">data-link-external="true"</span> to the specific option in the native select. The <span class="option">data-link-external</span> can also be used to open a specific link in a new window/tab even if the SoD itself is defined as internal links using the <a href="#links">links</a> option.</li>
                 <li>If you add the class <span class="option">.no_highlight</span> as a custom class to your SoD then the default check mark highlighting the selected option will not be displayed</li>
                 <li><span class="option">&lt;label&gt;</span> elements targeting the native select will set focus on the SoD. Once a SoD has focus the user can press the space bar to open it or use the arrow keys to move around in the SoD. Give it a try: <label for="label_test" class="action">I'm a label</label> for the SoD below</li>
             </ul>
@@ -711,23 +723,39 @@ $("select").selectOrDie({
 
         <div class="preview">
             <select class="basic" id="label_test">
-                <option value="one">One</option>
-                <option value="two" disabled="disabled">Two (disabled)</option>
-                <option value="three">Three</option>
+                <option value="one">Regular option</option>
+                <option value="two" disabled="disabled">Disabled option</option>
+                <option value="three">Regular option</option>
                 <optgroup label="Option Group Label (disabled)" disabled="disabled">
                     <option value="group.one">Option Group.One</option>
                     <option value="group.two">Option Group.Two</option>
                 </optgroup>
-                <option value="four">Four (selected), and a bit too long for its own good</option>
-                <option value="five">Five</option>
-                <option value="six" data-custom-class="bones">Six (custom class)</option>
-                <option value="http://www.google.com/" data-link="true">Seven (link to google.com)</option>
-                <option value="eight">Eight</option>
+                <option value="four">An option that's a bit too long for its own good</option>
+                <option value="six" data-custom-class="bones">Custom class option</option>
+                <option value="http://www.google.com/" data-link="true">Link option (google.com)</option>
+                <option value="http://www.google.com/" data-link-external="true">External link option (google.com)</option>
             </select>
         </div>
 
     </section>
 
+    <section id="compability">
+
+        <div class="content">
+            <header>
+                <h1>Compability / Misc</h1>
+                <p>I'll try to keep it short.</p>
+            </header>
+
+            <ul class="list">
+                <li>Tested with jQuery v1.8 and jQuery v2.1 and nothing in between (it should work just fine with a version in between the tested versions). Please note that if you use jQuery 2.x IE8 will not be supported, you can read more about this over att the <a class="external" href="http://blog.jquery.com/2013/04/18/jquery-2-0-released/" title="http://blog.jquery.com/2013/04/18/jquery-2-0-released/">jQuery blog</a>.</li>
+                <li>Tested in Firefox / Chrome / Safari / Opera / IE8+</li>
+                <li>This demo is using <a class="external" href="http://trentrichardson.com/examples/jQuery-Litelighter/" title="http://trentrichardson.com/examples/jQuery-Litelighter/">jQuery Litelighter</a> by Trent Richardson. The jQuery Litelighter is NOT required by Select or Die, it's just used to format the code blocks in this demo.</li>
+                <li>Cover photo found over at <a class="external" href="http://nos.twnsnd.co/image/81190207271" title="http://nos.twnsnd.co/image/81190207271">New Old Stock</a></li>
+            </ul>
+        </div>
+
+    </section>
 
     <section id="todo">
 
@@ -740,51 +768,6 @@ $("select").selectOrDie({
             <ul class="list">
                 <li>Add support for <span class="option">&lt;select multiple&gt;</span></li>
                 <li>Fix typos/grammar in this demo. If you spot any, feel free to send me an email.</li>
-            </ul>
-        </div>
-
-    </section>
-
-
-    <section id="history">
-
-        <div class="content">
-            <header>
-                <h1>Version History / Compability</h1>
-                <p>I'll try to keep it short.</p>
-            </header>
-
-            <table border="0" cellpadding="10" cellspacing="0">
-                <thead>
-                    <tr>
-                        <th scope="col">Version</th>
-                        <th scope="col">Description</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                    <tr>
-                        <td class="option">0.1.0</td>
-                        <td>
-                            <span class="hidden option">0.1.0</span>
-                            The SoD got an overhaul and faced the wrath of the Internet for the first time
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="option">0.0.666</td>
-                        <td>
-                            <span class="hidden option">0.0.666</span>
-                            Initial release
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <ul class="list">
-                <li>Tested with jQuery v1.8 and jQuery v2.1 and nothing in between (it should work just fine with a version in between the tested versions). Please note that if you use jQuery 2.x IE8 will not be supported, you can read more about this over att the <a class="external" href="http://blog.jquery.com/2013/04/18/jquery-2-0-released/" title="http://blog.jquery.com/2013/04/18/jquery-2-0-released/">jQuery blog</a>.</li>
-                <li>Tested in Firefox / Chrome / Safari / Opera / IE8+</li>
-                <li>This demo is using <a class="external" href="http://trentrichardson.com/examples/jQuery-Litelighter/" title="http://trentrichardson.com/examples/jQuery-Litelighter/">jQuery Litelighter</a> by Trent Richardson. The jQuery Litelighter is NOT required by Select or Die, it's just used to format the code blocks in this demo.</li>
-                <li>Cover photo found over at <a class="external" href="http://nos.twnsnd.co/image/81190207271" title="http://nos.twnsnd.co/image/81190207271">New Old Stock</a></li>
             </ul>
         </div>
 

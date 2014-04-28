@@ -1,8 +1,8 @@
 /* ===========================================================
  *
  *  Name:          selectordie.js
- *  Updated:       2014-04-26
- *  Version:       0.1.2
+ *  Updated:       2014-04-28
+ *  Version:       0.1.3
  *  Created by:    Per V @ Vst.mn
  *  What?:         The Select or Die JS
  *
@@ -20,15 +20,16 @@
         "use strict";
 
         var $defaults = {
-                customID:    null,          // String - "" by default - Adds an ID to the SoD
-                customClass: "",            // String - "" by default - Adds a class to the SoD
-                placeholder: null,          // String - "" by default - Adds a placeholder that will be shown before a selection has been made
-                prefix:      null,          // String - "" by default - Adds a prefix that always will be shown before the selected value
-                cycle:       false,         // Boolean - false by default - Should keyboard cycle through options or not?
-                links:       false,         // Boolean - false by default - Should the options be treated as links?
-                size:        0,             // Integer - 0 by default - The value set equals the amount of items before scroll is needed
-                tabIndex:    0,             // integer - 0 by default
-                onChange:    $.noop         // Adds a callback function for when the SoD gets changed
+                customID:      null,          // String - "" by default - Adds an ID to the SoD
+                customClass:   "",            // String - "" by default - Adds a class to the SoD
+                placeholder:   null,          // String - "" by default - Adds a placeholder that will be shown before a selection has been made
+                prefix:        null,          // String - "" by default - Adds a prefix that always will be shown before the selected value
+                cycle:         false,         // Boolean - false by default - Should keyboard cycle through options or not?
+                links:         false,         // Boolean - false by default - Should the options be treated as links?
+                linksExternal: false,         // Boolean - false by default - Should the options be treated as links and open in a new window/tab?
+                size:          0,             // Integer - 0 by default - The value set equals the amount of items before scroll is needed
+                tabIndex:      0,             // integer - 0 by default
+                onChange:      $.noop         // Adds a callback function for when the SoD gets changed
             },
             $_settings = {},
             $_sodFilterTimeout, $_sodViewportTimeout;
@@ -41,20 +42,21 @@
                 return this.each(function (i) {
 
                     if ( !$(this).parent().hasClass("sod_select") ) {
-                        var $select              = $(this),
-                            $settingsId          = $_settings.customID ? $_settings.customID : ( $select.data("custom-id") ? $select.data("custom-id") : $_settings.customID ),
-                            $settingsClass       = $_settings.customClass ? $_settings.customClass : ( $select.data("custom-class") ? $select.data("custom-class") : $_settings.customClass ),
-                            $settingsPrefix      = $_settings.prefix ? $_settings.prefix : ( $select.data("prefix") ? $select.data("prefix") : $_settings.prefix ),
-                            $settingsPlaceholder = $_settings.placeholder ? $_settings.placeholder : ( $select.data("placeholder") ? $select.data("placeholder") : $_settings.placeholder ),
-                            $settingsCycle       = ( $_settings.cycle || $select.data("cycle") ) ? true : $_settings.cycle,
-                            $settingsLinks       = ( $_settings.links || $select.data("links") ) ? true : $_settings.links,
-                            $settingsSize        = $_settings.size ? $_settings.size : ( $select.data("size") ? $select.data("size") : $_settings.size ),
-                            $settingsTabIndex    = $_settings.tabIndex ? $_settings.tabIndex : ( $select.data("tabindex") ? $select.data("tabindex") : ( $select.attr("tabindex") ? $select.attr("tabindex") : $_settings.tabIndex ) ),
-                            $selectTitle         = $select.prop("title") ? $select.prop("title") : null,
-                            $selectDisabled      = $select.is(":disabled") ? " disabled" : "",
-                            $sodPrefix           = "",
-                            $sodHtml             = "",
-                            $sodHeight           = 0,
+                        var $select                = $(this),
+                            $settingsId            = $_settings.customID ? $_settings.customID : ( $select.data("custom-id") ? $select.data("custom-id") : $_settings.customID ),
+                            $settingsClass         = $_settings.customClass ? $_settings.customClass : ( $select.data("custom-class") ? $select.data("custom-class") : $_settings.customClass ),
+                            $settingsPrefix        = $_settings.prefix ? $_settings.prefix : ( $select.data("prefix") ? $select.data("prefix") : $_settings.prefix ),
+                            $settingsPlaceholder   = $_settings.placeholder ? $_settings.placeholder : ( $select.data("placeholder") ? $select.data("placeholder") : $_settings.placeholder ),
+                            $settingsCycle         = ( $_settings.cycle || $select.data("cycle") ) ? true : $_settings.cycle,
+                            $settingsLinks         = ( $_settings.links || $select.data("links") ) ? true : $_settings.links,
+                            $settingsLinksExternal = ( $_settings.linksExternal || $select.data("links-external") ) ? true : $_settings.linksExternal,
+                            $settingsSize          = $_settings.size ? $_settings.size : ( $select.data("size") ? $select.data("size") : $_settings.size ),
+                            $settingsTabIndex      = $_settings.tabIndex ? $_settings.tabIndex : ( $select.data("tabindex") ? $select.data("tabindex") : ( $select.attr("tabindex") ? $select.attr("tabindex") : $_settings.tabIndex ) ),
+                            $selectTitle           = $select.prop("title") ? $select.prop("title") : null,
+                            $selectDisabled        = $select.is(":disabled") ? " disabled" : "",
+                            $sodPrefix             = "",
+                            $sodHtml               = "",
+                            $sodHeight             = 0,
                             $sod, $sodListWrapper, $sodList;
 
                         // If there's a prefix defined
@@ -71,16 +73,17 @@
 
                         // Inserts a new element that will act like our new <select>
                         $sod = $("<div/>", {
-                            id:                 $settingsId,
-                            "class":            "sod_select " + $settingsClass + $selectDisabled,
-                            title:              $selectTitle,
-                            tabindex:           $settingsTabIndex,
-                            html:               $sodHtml,
-                            "data-cycle":       $settingsCycle,
-                            "data-links":       $settingsLinks,
-                            "data-placeholder": $settingsPlaceholder,
-                            "data-prefix":      $settingsPrefix,
-                            "data-filter":      ""
+                            id:                    $settingsId,
+                            "class":               "sod_select " + $settingsClass + $selectDisabled,
+                            title:                 $selectTitle,
+                            tabindex:              $settingsTabIndex,
+                            html:                  $sodHtml,
+                            "data-cycle":          $settingsCycle,
+                            "data-links":          $settingsLinks,
+                            "data-links-external": $settingsLinksExternal,
+                            "data-placeholder":    $settingsPlaceholder,
+                            "data-prefix":         $settingsPrefix,
+                            "data-filter":         ""
                         }).insertAfter( this );
 
                         // If it's a touch device
@@ -148,20 +151,22 @@
 
 
             populateSoD: function ($option, $sodList, $sod) {
-                var $sodPlaceholder    = $sod.data("placeholder"),
-                    $sodPrefix         = $sod.data("prefix"),
-                    $optionParent      = $option.parent(),
-                    $optionText        = $option.text(),
-                    $optionValue       = $option.val(),
-                    $optionCustomClass = $option.data("custom-class") ? $option.data("custom-class") : "",
-                    $optionCustomId    = $option.data("custom-id") ? $option.data("custom-id") : null,
-                    $optionIsDisabled  = $option.is(":disabled") ? " disabled " : "",
-                    $optionIsSelected  = $option.is(":selected") ? " selected active " : "";
+                var $sodPlaceholder     = $sod.data("placeholder"),
+                    $sodPrefix          = $sod.data("prefix"),
+                    $optionParent       = $option.parent(),
+                    $optionText         = $option.text(),
+                    $optionValue        = $option.val(),
+                    $optionCustomId     = $option.data("custom-id") ? $option.data("custom-id") : null,
+                    $optionCustomClass  = $option.data("custom-class") ? $option.data("custom-class") : "",
+                    $optionIsDisabled   = $option.is(":disabled") ? " disabled " : "",
+                    $optionIsSelected   = $option.is(":selected") ? " selected active " : "",
+                    $optionLink         = $option.data("link") ? " link " : "",
+                    $optionLinkExternal = $option.data("link-external") ? " linkexternal" : "";
 
                 // Create <li> for each <option>
                 if ( $option.is("option") ) { // If <option>
                     $("<li/>", {
-                        "class":      $optionIsSelected + $optionIsDisabled + $optionCustomClass,
+                        "class":      $optionCustomClass + $optionIsDisabled + $optionIsSelected + $optionLink + $optionLinkExternal,
                         id:           $optionCustomId,
                         title:        $optionText,
                         html:         $optionText,
@@ -369,8 +374,10 @@
                 $_settings.onChange.call(this);
 
                 // If $_settings.links, send the user to the URL
-                if ( $sod.data("links") || $optionSelected.data("link") ) {
+                if ( ($sod.data("links") || $optionSelected.data("link")) && !$optionSelected.data("link-external") ) {
                     window.location.href = $optionSelected.val();
+                } else if ( $sod.data("links-external") || $optionSelected.data("link-external") ) {
+                    window.open($optionSelected.val(),"_blank");
                 }
             }, // selectChange
 

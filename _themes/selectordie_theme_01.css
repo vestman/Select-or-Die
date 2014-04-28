@@ -232,6 +232,8 @@
                 /* Add a .no_highlight class to you SoD to hide the check mark */
                 .sod_select.no_highlight .sod_list .selected:before { display: none; }
 
+            .sod_select .sod_list .link { /* If data-link is set on a specific option */ }
+            .sod_select .sod_list .linkexternal { /* If data-link-external is set on a specific option */ }
 
 
     /* Hide native select */
