@@ -1,6 +1,7 @@
 {
   "name": "SelectOrDie",
   "version": "0.1.4",
+  "license": "MIT",
   "homepage": "https://github.com/vestman/Select-or-Die",
   "authors": [
     "Per @ Vst.mn"
@@ -8,16 +9,15 @@
   "description": "Yet another jQuery plugin to style select elements.",
   "main": [
     "_src/selectordie.js",
-    "_src/selectordie."
+    "_src/selectordie.css"
+  ],
+  "ignore": [
+    "*.jquery.json"
   ],
   "keywords": [
     "select",
     "replacement",
     "death",
     "jQuery"
-  ],
-  "license": "MIT",
-  "ignore": [
-    "*.jquery.json"
   ]
 }
