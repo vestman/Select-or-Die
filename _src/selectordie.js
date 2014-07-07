@@ -1,8 +1,8 @@
 /* ===========================================================
  *
  *  Name:          selectordie.js
- *  Updated:       2014-04-28
- *  Version:       0.1.3
+ *  Updated:       2014-07-07
+ *  Version:       0.1.4
  *  Created by:    Per V @ Vst.mn
  *  What?:         The Select or Die JS
  *
@@ -11,7 +11,7 @@
  *
  *  To much comments in the code. Please, I know.
  *
- *  Beards, Rock & Loud Guns | Cogs 'n Kegs
+ *  Oddny | Cogs 'n Kegs
  *
  * =========================================================== */
 
@@ -66,13 +66,13 @@
 
                         // If there's a placeholder defined
                         if ( $settingsPlaceholder && !$settingsPrefix ) {
-                            $sodHtml += "<div class=\"sod_label sod_placeholder\">" + $settingsPlaceholder + "</span>";
+                            $sodHtml += "<span class=\"sod_label sod_placeholder\">" + $settingsPlaceholder + "</span>";
                         } else {
-                            $sodHtml += "<div class=\"sod_label\">" + $sodPrefix + "</div>";
+                            $sodHtml += "<span class=\"sod_label\">" + $sodPrefix + "</span>";
                         }
 
                         // Inserts a new element that will act like our new <select>
-                        $sod = $("<div/>", {
+                        $sod = $("<span/>", {
                             id:                    $settingsId,
                             "class":               "sod_select " + $settingsClass + $selectDisabled,
                             title:                 $selectTitle,
@@ -92,12 +92,14 @@
                         }
 
                         // Add a wrapper for the option list
-                        $sodListWrapper = $("<div/>", {
-                            "class": "sod_list"
+                        $sodListWrapper = $("<span/>", {
+                            "class": "sod_list_wrapper"
                         }).appendTo($sod);
 
                         // Inserts a <ul> into our wrapper created above. It will host our <option>:s
-                        $sodList = $("<ul/>").appendTo($sodListWrapper);
+                        $sodList = $("<span/>", {
+                            "class": "sod_list"
+                        }).appendTo($sodListWrapper);
 
                         // Inserts a <li> for each <option>
                         $("option, optgroup", $select).each(function (i) {
@@ -110,7 +112,7 @@
                             $sodListWrapper.show();
 
                             // Calculate a max-height
-                            $("li:lt(" + $settingsSize + ")", $sodList).each(function (i) {
+                            $(".sod_option:lt(" + $settingsSize + ")", $sodList).each(function (i) {
                                 $sodHeight += $(this).outerHeight();
                             });
 
@@ -125,8 +127,8 @@
                         // Bind events to the SoD
                         $sod.on("focusin", _private.focusSod)
                             .on("click", _private.triggerSod)
-                            .on("click", "li", _private.optionClick)
-                            .on("mousemove", "li", _private.optionHover)
+                            .on("click", ".sod_option", _private.optionClick)
+                            .on("mousemove", ".sod_option", _private.optionHover)
                             .on("keydown keypress", _private.keyboardUse);
 
                         // Bind change event to the <select>
@@ -165,8 +167,8 @@
 
                 // Create <li> for each <option>
                 if ( $option.is("option") ) { // If <option>
-                    $("<li/>", {
-                        "class":      $optionCustomClass + $optionIsDisabled + $optionIsSelected + $optionLink + $optionLinkExternal,
+                    $("<span/>", {
+                        "class":      "sod_option " + $optionCustomClass + $optionIsDisabled + $optionIsSelected + $optionLink + $optionLinkExternal,
                         id:           $optionCustomId,
                         title:        $optionText,
                         html:         $optionText,
@@ -187,16 +189,16 @@
 
                     // If child of an <optgroup>
                     if ( $optionParent.is("optgroup") ) {
-                        $sodList.find("li:last").addClass("groupchild");
+                        $sodList.find(".sod_option:last").addClass("groupchild");
 
                         // If <optgroup> disabled
                         if ( $optionParent.is(":disabled") ) {
-                            $sodList.find("li:last").addClass("disabled");
+                            $sodList.find(".sod_option:last").addClass("disabled");
                         }
                     }
                 } else { // If <<optgroup>
-                    $("<li/>", {
-                        "class":      "optgroup " + $optionIsDisabled,
+                    $("<span/>", {
+                        "class":      "sod_option optgroup " + $optionIsDisabled,
                         title:        $option.prop("label"),
                         html:         $option.prop("label"),
                         "data-label": $option.prop("label")
@@ -206,10 +208,12 @@
 
 
             focusSod: function () {
-                var $sod = $(this);
+                var $sod        = $(this),
+                    $sodInFocus = $(".sod_select.focus");
 
-                // If not disabled we'll add focus and an .active class to enable keyboard
+                // If not disabled we'll add focus (and blur other active SoD's)
                 if ( !$sod.hasClass("disabled") ) {
+                    _private.blurSod($sodInFocus);
                     $sod.addClass("focus");
                 } else {
                     _private.blurSod($sod);
@@ -221,7 +225,7 @@
                 e.stopPropagation();
 
                 var $sod            = $(this),
-                    $sodList        = $sod.find("ul"),
+                    $sodList        = $sod.find(".sod_list"),
                     $sodPlaceholder = $sod.data("placeholder"),
                     $optionSelected = $sod.find(".selected");
 
@@ -253,8 +257,8 @@
 
             keyboardUse: function (e) {
                 var $sod            = $(this),
-                    $sodList        = $sod.find("ul"),
-                    $sodOptions     = $sod.find("li"),
+                    $sodList        = $sod.find(".sod_list"),
+                    $sodOptions     = $sod.find(".sod_option"),
                     $sodLabel       = $sod.find(".sod_label"),
                     $sodCycle       = $sod.data("cycle"),
                     $optionActive   = $sodOptions.filter(".active"),
@@ -300,12 +304,12 @@
                     }
 
                     // If there's no option before/after and cycle is enabled
-                    if ( !$optionNext.is("li") && $sodCycle ) {
+                    if ( !$optionNext.hasClass("sod_option") && $sodCycle ) {
                         $optionNext = $optionCycle;
                     }
 
                     // Add .active to the next option, update the label and scroll the list
-                    if ( $optionNext.is("li") || $sodCycle ) {
+                    if ( $optionNext.hasClass("sod_option") || $sodCycle ) {
                         $optionActive.removeClass("active");
                         $optionNext.addClass("active");
                         $sodLabel.get(0).lastChild.nodeValue = $optionNext.text();
@@ -343,7 +347,7 @@
                     $sod            = $clicked.closest(".sod_select"),
                     $optionDisabled = $clicked.hasClass("disabled"),
                     $optionOptgroup = $clicked.hasClass("optgroup"),
-                    $optionIndex    = $sod.find("li:not('.optgroup')").index(this);
+                    $optionIndex    = $sod.find(".sod_option:not('.optgroup')").index(this);
 
                 // If not disabled or optgroup
                 if ( !$optionDisabled && !$optionOptgroup ) {
@@ -456,7 +460,7 @@
                         $select.off("change");
 
                         // Restore DOM
-                        $sod.find("div").remove();
+                        $sod.find("span").remove();
                         $select.unwrap();
                     } else {
                         console.log("Select or Die: There's no SoD to destroy");
@@ -469,7 +473,7 @@
                 return this.each(function (i) {
                     var $select  = $(this),
                         $sod     = $select.parent(),
-                        $sodList = $sod.find("ul:first");
+                        $sodList = $sod.find(".sod_list:first");
 
                     // Check for the SoD
                     if ( $sod.hasClass("sod_select") ) {
@@ -484,7 +488,7 @@
                             $sod.addClass("disabled");
                         }
 
-                        // Inserts a <li> for each <option>
+                        // Inserts a <span class="sod_option"> for each <option>
                         $("option, optgroup", $select).each(function (i) {
                             _private.populateSoD($(this), $sodList, $sod);
                         });
@@ -506,8 +510,8 @@
                         if ( typeof $value !== "undefined" ) { // Disable option/optgroup
 
                             // Disables the option (and possible children if optgroup) in the SoD
-                            $sod.find("ul:first li[data-value='" + $value + "']").addClass("disabled");
-                            $sod.find("ul:first li[data-label='" + $value + "']").nextUntil(":not(.groupchild)").addClass("disabled");
+                            $sod.find(".sod_list:first .sod_option[data-value='" + $value + "']").addClass("disabled");
+                            $sod.find(".sod_list:first .sod_option[data-label='" + $value + "']").nextUntil(":not(.groupchild)").addClass("disabled");
 
                             // Disables the option/optgroup in the real <select>
                             $("option[value='" + $value + "'], optgroup[label='" + $value + "']", this).prop("disabled", true);
@@ -533,8 +537,8 @@
                         if ( typeof $value !== "undefined" ) { // Enable option/optgroup
 
                             // Enables the option (and possible children if optgroup) in the SoD
-                            $sod.find("ul:first li[data-value='" + $value + "']").removeClass("disabled");
-                            $sod.find("ul:first li[data-label='" + $value + "']").nextUntil(":not(.groupchild)").removeClass("disabled");
+                            $sod.find(".sod_list:first .sod_option[data-value='" + $value + "']").removeClass("disabled");
+                            $sod.find(".sod_list:first .sod_option[data-label='" + $value + "']").nextUntil(":not(.groupchild)").removeClass("disabled");
 
                             // Enables the option in the real <select>
                             $("option[value='" + $value + "'], optgroup[label='" + $value + "']", this).prop("disabled", false);

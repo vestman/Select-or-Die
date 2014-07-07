@@ -1,14 +1,14 @@
 /* ===========================================================
  *
  *  Name:          selectordie_theme_02.css
- *  Updated:       2014-04-27
+ *  Updated:       2014-07-07
  *  Created by:    Per V @ Vst.mn
  *  What?:         Custom "theme" for Select or Die
  *                 To use this theme, include this file
  *                 instead of the .selectordie.css file
  *
  *
- *  Beards, Rock & Loud Guns | Cogs 'n Kegs
+ *  Oddny | Cogs 'n Kegs
  * =========================================================== */
 
 /* Remove, change to fit your needs */
@@ -109,7 +109,7 @@
 
 
     /* Options list wrapper */
-    .sod_select .sod_list
+    .sod_select .sod_list_wrapper
         {
             position: absolute;
             top: 100%;
@@ -128,13 +128,13 @@
         }
 
         /* Shows the option list (don't edit) */
-        .sod_select.open .sod_list { display: block;  }
+        .sod_select.open .sod_list_wrapper { display: block;  }
 
         /* Don't display the options when  */
-        .sod_select.disabled.open .sod_list { display: none;  }
+        .sod_select.disabled.open .sod_list_wrapper { display: none;  }
 
         /* When the option list is displayed above the SoD */
-        .sod_select.above .sod_list
+        .sod_select.above .sod_list_wrapper
             {
                 top: auto;
                 bottom: 100%;
@@ -144,8 +144,8 @@
             }
 
         /* Arrow(s) displayed when the SoD is active, only in this "theme" */
-        .sod_select .sod_list:after,
-        .sod_select .sod_list:before
+        .sod_select .sod_list_wrapper:after,
+        .sod_select .sod_list_wrapper:before
             {
                 content: "";
                 position: absolute;
@@ -157,27 +157,27 @@
                 pointer-events: none;
             }
 
-            .sod_select.above .sod_list:after,
-            .sod_select.above .sod_list:before
+            .sod_select.above .sod_list_wrapper:after,
+            .sod_select.above .sod_list_wrapper:before
                 {
                     top: 100%;
                     bottom: auto;
                 }
 
-        .sod_select .sod_list:after
+        .sod_select .sod_list_wrapper:after
             {
                 border-color: rgba(255, 255, 255, 0);
                 border-bottom-color: #ffffff;
                 border-width: 6px;
             }
 
-            .sod_select.above .sod_list:after
+            .sod_select.above .sod_list_wrapper:after
                 {
                     border-color: rgba(255, 255, 255, 0);
                     border-top-color: #ffffff;
                 }
 
-        .sod_select .sod_list:before
+        .sod_select .sod_list_wrapper:before
             {
                 margin-right: -2px;
                 border-color: rgba(212, 212, 212, 0);
@@ -185,7 +185,7 @@
                 border-width: 8px;
             }
 
-            .sod_select.above .sod_list:before
+            .sod_select.above .sod_list_wrapper:before
                 {
                     border-color: rgba(255, 255, 255, 0);
                     border-top-color: #d4d4d4;
@@ -193,7 +193,7 @@
 
 
     /* Options list container */
-    .sod_select .sod_list ul
+    .sod_select .sod_list
         {
             overflow-y: auto;
             padding: 0 4px;
@@ -202,7 +202,7 @@
         }
 
         /* All the options. Keep the first three lines for truncating... */
-        .sod_select .sod_list li
+        .sod_select .sod_option
             {
                 overflow: hidden;
                 white-space: nowrap;
@@ -215,11 +215,11 @@
             }
 
             /* Remove the bottom border from the last item */
-            .sod_select .sod_list li:last-child { border-bottom: none; }
+            .sod_select .sod_option:last-child { border-bottom: none; }
 
             /* Optgroups */
-            .sod_select .sod_list .optgroup,
-            .sod_select .sod_list .optgroup.disabled
+            .sod_select .sod_option.optgroup,
+            .sod_select .sod_option.optgroup.disabled
                 {
                     background: inherit;
                     color: #939393;
@@ -228,17 +228,17 @@
                 }
 
                 /* Children of an optgroup */
-                .sod_select .sod_list .groupchild { padding-left: 20px; }
+                .sod_select .sod_option.groupchild { padding-left: 20px; }
 
             /* Disabled option */
-            .sod_select .sod_list .disabled
+            .sod_select .sod_option.disabled
                 {
                     background: inherit;
                     color: #cccccc;
                 }
 
             /* Hover state for options, also used when a user uses his/hers up/down keys */
-            .sod_select .sod_list .active
+            .sod_select .sod_option.active
                 {
                     background: #f7f7f7;
                     border-radius: 3px;
@@ -246,14 +246,14 @@
                 }
 
             /*Make room for the check mark */
-            .sod_select .sod_list .selected
+            .sod_select .sod_option.selected
                 {
                     padding-right: 25px;
                     font-weight: 700;
                 }
 
                 /* Displays a check mark for the selected option */
-                .sod_select .sod_list .selected:before
+                .sod_select .sod_option.selected:before
                     {
                         content: "";
                         position: absolute;
@@ -270,10 +270,10 @@
                     }
 
                 /* Add a .no_highlight class to you SoD to hide the check mark */
-                .sod_select.no_highlight .sod_list .selected:before { display: none; }
+                .sod_select.no_highlight .sod_option.selected:before { display: none; }
 
-            .sod_select .sod_list .link { /* If data-link is set on a specific option */ }
-            .sod_select .sod_list .linkexternal { /* If data-link-external is set on a specific option */ }
+            .sod_select .sod_option.link { /* If data-link is set on a specific option */ }
+            .sod_select .sod_option.linkexternal { /* If data-link-external is set on a specific option */ }
 
 
     /* Hide native select */

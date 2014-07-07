@@ -1,11 +1,11 @@
 /* ===========================================================
  *
  *  Name:          demo.css
- *  Updated:       2014-04-27
+ *  Updated:       2014-07-07
  *  Created by:    Per V @ Vst.mn
  *  What?:         CSS for the Select or Die demo
  *
- *  Beards, Rock & Loud Guns | Cogs 'n Kegs
+ *  Oddny | Cogs 'n Kegs
  * =========================================================== */
 
 *
@@ -110,7 +110,7 @@ a,
 
         .cover_sod .sod_label { padding-right: 30px; }
 
-        .cover_sod .sod_list
+        .cover_sod .sod_list_wrapper
             {
                 top: calc(100% + 10px);
                 width: calc(100% + 20px);
@@ -121,7 +121,7 @@ a,
                 font-weight: 300;
             }
 
-            .cover_sod .sod_list li { padding: 15px 30px; }
+            .cover_sod .sod_option { padding: 15px 30px; }
 
 .content
     {

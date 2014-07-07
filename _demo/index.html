@@ -192,9 +192,7 @@
                 <p>Apply the plugin and you're good to go.</p>
             </header>
 
-            <code>
-                <pre>$("select").selectOrDie();</pre>
-            </code>
+            <pre>$("select").selectOrDie();</pre>
         </div>
 
         <div class="preview">
@@ -223,19 +221,17 @@
                 <p>Maybe you have multiple selects on the same page and one should look different, or whatever need you can find for a custom class/ID. In this example we're using a custom class give the SoD a different look.</p>
             </header>
 
-            <code>
-                <pre>
+            <pre>
 $("select").selectOrDie({
     customClass: "custom",
     customID:    "custom"
 });</pre>
 
-                <p>or</p>
+            <p>or</p>
 
-                <pre>
+            <pre>
 $("select").selectOrDie();
 &lt;select data-custom-id="custom" data-custom-class="custom"&gt;</pre>
-            </code>
         </div>
 
         <div class="preview">
@@ -264,18 +260,16 @@ $("select").selectOrDie();
                 <p>If you feel like adding a placeholder that's displayed before anything is selected. Once a selection has been made the placeholder will be removed until the user clicks the SoD again, then it will be shown until the user makes a new selection or focus is lost on the SoD. The "placeholder" is given the class <span class="option">.sod_placeholder</span></p>
             </header>
 
-            <code>
-                <pre>
+            <pre>
 $("select").selectOrDie({
     placeholder: "Choose a number"
 });</pre>
 
-                <p>or</p>
+            <p>or</p>
 
-                <pre>
+            <pre>
 $("select").selectOrDie();
 &lt;select data-placeholder="Choose a number"&gt;</pre>
-            </code>
         </div>
 
         <div class="preview">
@@ -300,18 +294,16 @@ $("select").selectOrDie();
                 <p>Add a prefix that's displayed in front of the selected option. The "prefix" is given the class <span class="option">.sod_prefix</span>,</p>
             </header>
 
-            <code>
-                <pre>
+            <pre>
 $("select").selectOrDie({
     prefix: "Number:"
 });</pre>
 
-                <p>or</p>
+            <p>or</p>
 
-                <pre>
+            <pre>
 $("select").selectOrDie();
 &lt;select data-prefix="Number:"&gt;</pre>
-            </code>
         </div>
 
         <div class="preview">
@@ -336,18 +328,16 @@ $("select").selectOrDie();
                 <p>When enabled it allows the user to cycle the list using his/hers arrow keys.</p>
             </header>
 
-            <code>
-                <pre>
+            <pre>
 $("select").selectOrDie({
     cycle: true
 });</pre>
 
-                <p>or</p>
+            <p>or</p>
 
-                <pre>
+            <pre>
 $("select").selectOrDie();
 &lt;select data-cycle="true"&gt;</pre>
-            </code>
         </div>
 
         <div class="preview">
@@ -373,20 +363,18 @@ $("select").selectOrDie();
                 <p>You can also define a specific option to act as a link by adding a data attribute to the specific option in the native select. More on that in the <a href="#various">various</a> section below.</p>
             </header>
 
-            <code>
-                <pre>
+            <pre>
 $("select").selectOrDie({
     links: true,
     placeholder: "Go to...",
     customClass: "no_highlight"
 });</pre>
 
-                <p>or</p>
+            <p>or</p>
 
-                <pre>
+            <pre>
 $("select").selectOrDie();
 &lt;select data-links="true" data-placeholder="Go to..." data-custom-class="no_highlight"&gt;</pre>
-            </code>
         </div>
 
         <div class="preview">
@@ -409,18 +397,16 @@ $("select").selectOrDie();
                 <p>The select below consists of 10 options, but since the size is set to 4 it will only show 4 before you have to scroll (or use your up/down keys) to see the rest of the options.</p>
             </header>
 
-            <code>
-                <pre>
+            <pre>
 $("select").selectOrDie({
     size: 5
 });</pre>
 
-                <p>or</p>
+            <p>or</p>
 
-                <pre>
+            <pre>
 $("select").selectOrDie();
 &lt;select data-size="5"&gt;</pre>
-            </code>
         </div>
 
         <div class="preview">
@@ -455,18 +441,16 @@ $("select").selectOrDie();
                 <p>The SoD will grab the <span class="option">tabindex</span> set on the native select, but you can override the default tabindex by specifying a custom one. If no tabindex is set on the native select or no custom tabindex is defined then the tabindex of the SoD will be set to <span class="option">0</span></p>
             </header>
 
-            <code>
-                <pre>
+            <pre>
 $("select").selectOrDie({
     tabindex: 10
 });</pre>
 
-                <p>or</p>
+            <p>or</p>
 
-                <pre>
+            <pre>
 $("select").selectOrDie();
 &lt;select data-tabindex="10"&gt;</pre>
-            </code>
         </div>
 
         <div class="preview">
@@ -491,12 +475,10 @@ $("select").selectOrDie();
                 <p>So you want to do something after the user has made a selection? Go ahead.</p>
             </header>
 
-            <code>
-                <pre>
+            <pre>
 $("select").selectOrDie({
     onChange: function() { alert( $(this).val() ) }
 });</pre>
-            </code>
         </div>
 
         <div class="preview">
@@ -583,9 +565,7 @@ $("select").selectOrDie({
                 </span>
             </div>
 
-            <code>
-                <pre>$("select").selectOrDie();</pre>
-            </code>
+            <pre>$("select").selectOrDie();</pre>
         </div>
 
         <div class="preview">
@@ -613,9 +593,7 @@ $("select").selectOrDie({
                 <span class="trigger" data-method="update">Append an option and update the SoD</span>
             </div>
 
-            <code>
-                <pre>$("select").selectOrDie();</pre>
-            </code>
+            <pre>$("select").selectOrDie();</pre>
         </div>
 
         <div class="preview">
@@ -660,9 +638,7 @@ $("select").selectOrDie({
                 </label>
             </div>
 
-            <code>
-                <pre>$("select").selectOrDie();</pre>
-            </code>
+            <pre>$("select").selectOrDie();</pre>
         </div>
 
         <div class="preview">

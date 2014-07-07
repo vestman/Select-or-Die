@@ -4,7 +4,7 @@
  *  Updated:       2014-04-15
  *  What?:         Random crap for the Select or Die demo
  *
- *  Beards, Rock & Loud Guns | Cogs 'n Kegs
+ *  Oddny | Cogs 'n Kegs
  * =========================================================== */
 
 
