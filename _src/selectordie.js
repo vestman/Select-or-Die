@@ -1,7 +1,7 @@
 /* ===========================================================
  *
  *  Name:          selectordie.js
- *  Updated:       2014-07-07
+ *  Updated:       2014-07-08
  *  Version:       0.1.4
  *  Created by:    Per V @ Vst.mn
  *  What?:         The Select or Die JS
@@ -67,7 +67,8 @@
                         // If there's a placeholder defined
                         if ( $settingsPlaceholder && !$settingsPrefix ) {
                             $sodHtml += "<span class=\"sod_label sod_placeholder\">" + $settingsPlaceholder + "</span>";
-                        } else {
+                        }
+                        else {
                             $sodHtml += "<span class=\"sod_label\">" + $sodPrefix + "</span>";
                         }
 
@@ -144,7 +145,8 @@
                             e.preventDefault();
                             $sod.focus();
                         });
-                    } else {
+                    }
+                    else {
                         console.log("Select or Die: It looks like the SoD already exists");
                     }
 
@@ -183,7 +185,8 @@
                     // Set the SoD data-label (used in the blur event)
                     if ( $optionIsSelected && $sodPlaceholder && !$sodPrefix ) {
                         $sod.data("label", $sodPlaceholder);
-                    } else if ( $optionIsSelected ) {
+                    }
+                    else if ( $optionIsSelected ) {
                         $sod.data("label", $optionText);
                     }
 
@@ -196,7 +199,8 @@
                             $sodList.find(".sod_option:last").addClass("disabled");
                         }
                     }
-                } else { // If <<optgroup>
+                }
+                else { // If <<optgroup>
                     $("<span/>", {
                         "class":      "sod_option optgroup " + $optionIsDisabled,
                         title:        $option.prop("label"),
@@ -215,7 +219,8 @@
                 if ( !$sod.hasClass("disabled") ) {
                     _private.blurSod($sodInFocus);
                     $sod.addClass("focus");
-                } else {
+                }
+                else {
                     _private.blurSod($sod);
                 }
             }, // focusSod
@@ -247,7 +252,8 @@
 
                     // Check if the option list fits in the viewport
                     _private.checkViewport($sod, $sodList);
-                } else {
+                }
+                else {
                     // Clears viewport check timeout
                     clearTimeout($_sodViewportTimeout);
                     $sod.removeClass("open above");
@@ -298,7 +304,8 @@
                     if ( e.which === 37 || e.which === 38 ) { // Left/Up key
                         $optionNext  = $optionActive.prevAll(":not('.disabled, .optgroup')").first();
                         $optionCycle = $sodOptions.not(".disabled, .optgroup").last();
-                    } else if ( e.which === 39 || e.which === 40 ) { // Right/Down key
+                    }
+                    else if ( e.which === 39 || e.which === 40 ) { // Right/Down key
                         $optionNext  = $optionActive.nextAll(":not('.disabled, .optgroup')").first();
                         $optionCycle = $sodOptions.not(".disabled, .optgroup").first();
                     }
@@ -318,13 +325,16 @@
 
                     // Disables the up/down keys from scrolling the page
                     return false;
-                } else if ( e.which === 13 || (e.which === 32 && $sod.hasClass("open") && $sod.data("filter") === "") ) { // Enter key or space, simulate click() function
+                }
+                else if ( e.which === 13 || (e.which === 32 && $sod.hasClass("open") && $sod.data("filter") === "") ) { // Enter key or space, simulate click() function
                     e.preventDefault();
                     $optionActive.click();
-                } else if ( e.which === 32 && !$sod.hasClass("open") && $sod.data("filter") === "" ) { // Space bar, Opens the SoD if already closed
+                }
+                else if ( e.which === 32 && !$sod.hasClass("open") && $sod.data("filter") === "" ) { // Space bar, Opens the SoD if already closed
                     e.preventDefault();
                     $sod.click();
-                } else if ( e.which === 27 ) { // Esc key, hides dropdown
+                }
+                else if ( e.which === 27 ) { // Esc key, hides dropdown
                     _private.blurSod($sod);
                 }
             }, // keyboardUse
@@ -380,7 +390,8 @@
                 // If $_settings.links, send the user to the URL
                 if ( ($sod.data("links") || $optionSelected.data("link")) && !$optionSelected.data("link-external") ) {
                     window.location.href = $optionSelected.val();
-                } else if ( $sod.data("links-external") || $optionSelected.data("link-external") ) {
+                }
+                else if ( $sod.data("links-external") || $optionSelected.data("link-external") ) {
                     window.open($optionSelected.val(),"_blank");
                 }
             }, // selectChange
@@ -395,15 +406,20 @@
                     // Clear viewport check timeout
                     clearTimeout($_sodViewportTimeout);
 
-                    // Remove above/open class
-                    $sod.removeClass("open focus above");
-
-                    // Restore the select if no change has been made
-                    if ( !$optionActive.hasClass("selected") ) {
+                    // Check the $sod for changes. If the user has used his keys when the SoD was closed
+                    // we'll set the currently active option to selected. If the user used his keys when
+                    // the SoD was open but didn't make a selection, then we'll restore the SoD
+                    if ( $sod.hasClass("focus") && !$sod.hasClass("open" ) ) {
+                        $optionActive.click();
+                    }
+                    else if ( !$optionActive.hasClass("selected") ) {
                         $sod.find(".sod_label").get(0).lastChild.nodeValue = $sodLabel;
                         $optionActive.removeClass("active");
                         $optionSelected.addClass("active");
                     }
+
+                    // Remove above/open class
+                    $sod.removeClass("open focus above");
 
                     $sod.blur();
                 }
@@ -417,7 +433,8 @@
                 // If the list is below the viewport AND fits above, then show it above
                 if ( ($sodPosition.bottom + $sodListHeight + 10) > $(window).height() && ($sodPosition.top - $sodListHeight) > 10 ) {
                     $sod.addClass("above");
-                } else {
+                }
+                else {
                     $sod.removeClass("above");
                 }
 
