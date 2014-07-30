@@ -211,7 +211,11 @@
             }, // populateSoD
 
 
-            focusSod: function () {
+            focusSod: function (e) {
+                if( $(e.target).hasClass('sod_label') || $(e.target).hasClass('sod_option')){
+                    return;
+                }
+                
                 var $sod        = $(this),
                     $sodInFocus = $(".sod_select.focus");
 
