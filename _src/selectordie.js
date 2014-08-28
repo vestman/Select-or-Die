@@ -359,7 +359,7 @@
                     $optionOptgroup = $clicked.hasClass("optgroup"),
                     $optionIndex    = $sod.find(".sod_option:not('.optgroup')").index(this);
 
-                if ($sod.hasClass('touch')) {
+                if ($sod.hasClass("touch")) {
                     return;
                 }
                 
