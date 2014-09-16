@@ -1,8 +1,8 @@
 /* ===========================================================
  *
  *  Name:          selectordie.js
- *  Updated:       2014-07-08
- *  Version:       0.1.4
+ *  Updated:       2014-09-17
+ *  Version:       0.1.6
  *  Created by:    Per V @ Vst.mn
  *  What?:         The Select or Die JS
  *
@@ -25,6 +25,7 @@
                 placeholder:   null,          // String - "" by default - Adds a placeholder that will be shown before a selection has been made
                 prefix:        null,          // String - "" by default - Adds a prefix that always will be shown before the selected value
                 cycle:         false,         // Boolean - false by default - Should keyboard cycle through options or not?
+                stripEmpty:    false,         // Boolean - false by default - Should empty <option>'s be stripped from the <select>
                 links:         false,         // Boolean - false by default - Should the options be treated as links?
                 linksExternal: false,         // Boolean - false by default - Should the options be treated as links and open in a new window/tab?
                 size:          0,             // Integer - 0 by default - The value set equals the amount of items before scroll is needed
@@ -52,6 +53,7 @@
                             $settingsLinksExternal = ( $_settings.linksExternal || $select.data("links-external") ) ? true : $_settings.linksExternal,
                             $settingsSize          = $_settings.size ? $_settings.size : ( $select.data("size") ? $select.data("size") : $_settings.size ),
                             $settingsTabIndex      = $_settings.tabIndex ? $_settings.tabIndex : ( $select.data("tabindex") ? $select.data("tabindex") : ( $select.attr("tabindex") ? $select.attr("tabindex") : $_settings.tabIndex ) ),
+                            $settingsStripEmpty    = ( $_settings.stripEmpty || $select.data("strip-empty") ) ? true : $_settings.stripEmpty,
                             $selectTitle           = $select.prop("title") ? $select.prop("title") : null,
                             $selectDisabled        = $select.is(":disabled") ? " disabled" : "",
                             $sodPrefix             = "",
@@ -104,7 +106,14 @@
 
                         // Inserts a <li> for each <option>
                         $("option, optgroup", $select).each(function (i) {
-                            _private.populateSoD($(this), $sodList, $sod);
+                            var $this = $(this);
+
+                            if ( $settingsStripEmpty && !$.trim($this.text()) ) { // Strip empty <option>'s from the <select>
+                                $this.remove();
+                            }
+                            else {
+                                _private.populateSoD($this, $sodList, $sod);
+                            }
                         });
 
                         // If the setting size is set, then add a max-height to the SoD
@@ -215,7 +224,7 @@
                 if( $(e.target).hasClass('sod_label') || $(e.target).hasClass('sod_option')){
                     return;
                 }
-                
+
                 var $sod        = $(this),
                     $sodInFocus = $(".sod_select.focus");
 
@@ -366,7 +375,7 @@
                 if ($sod.hasClass("touch")) {
                     return;
                 }
-                
+
                 // If not disabled or optgroup
                 if ( !$optionDisabled && !$optionOptgroup ) {
                     $sod.find(".selected, .sod_placeholder").removeClass("selected sod_placeholder");
