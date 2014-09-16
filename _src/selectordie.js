@@ -363,6 +363,10 @@
                     $optionOptgroup = $clicked.hasClass("optgroup"),
                     $optionIndex    = $sod.find(".sod_option:not('.optgroup')").index(this);
 
+                if ($sod.hasClass("touch")) {
+                    return;
+                }
+                
                 // If not disabled or optgroup
                 if ( !$optionDisabled && !$optionOptgroup ) {
                     $sod.find(".selected, .sod_placeholder").removeClass("selected sod_placeholder");
