@@ -1,8 +1,8 @@
 /* ===========================================================
  *
  *  Name:          selectordie.js
- *  Updated:       2014-09-17
- *  Version:       0.1.6
+ *  Updated:       2014-10-09
+ *  Version:       0.1.7
  *  Created by:    Per V @ Vst.mn
  *  What?:         The Select or Die JS
  *
@@ -16,8 +16,9 @@
  * =========================================================== */
 
 ; (function ($) {
+    "use strict";
+
     $.fn.selectOrDie = function (method) {
-        "use strict";
 
         var $defaults = {
                 customID:      null,          // String - "" by default - Adds an ID to the SoD
@@ -33,6 +34,7 @@
                 onChange:      $.noop         // Adds a callback function for when the SoD gets changed
             },
             $_settings = {},
+            $_sodKeysWhenClosed = false,
             $_sodFilterTimeout, $_sodViewportTimeout;
 
         var _private = {
@@ -40,7 +42,7 @@
             initSoD: function (options) {
                 $_settings = $.extend({}, $defaults, options);
 
-                return this.each(function (i) {
+                return this.each(function () {
 
                     if ( !$(this).parent().hasClass("sod_select") ) {
                         var $select                = $(this),
@@ -99,13 +101,13 @@
                             "class": "sod_list_wrapper"
                         }).appendTo($sod);
 
-                        // Inserts a <ul> into our wrapper created above. It will host our <option>:s
+                        // Inserts a <span> into our wrapper created above. It will host our <option>:s
                         $sodList = $("<span/>", {
                             "class": "sod_list"
                         }).appendTo($sodListWrapper);
 
-                        // Inserts a <li> for each <option>
-                        $("option, optgroup", $select).each(function (i) {
+                        // Inserts an option <span> for each <option>
+                        $("option, optgroup", $select).each(function () {
                             var $this = $(this);
 
                             if ( $settingsStripEmpty && !$.trim($this.text()) ) { // Strip empty <option>'s from the <select>
@@ -122,7 +124,7 @@
                             $sodListWrapper.show();
 
                             // Calculate a max-height
-                            $(".sod_option:lt(" + $settingsSize + ")", $sodList).each(function (i) {
+                            $(".sod_option:lt(" + $settingsSize + ")", $sodList).each(function () {
                                 $sodHeight += $(this).outerHeight();
                             });
 
@@ -139,15 +141,10 @@
                             .on("click", _private.triggerSod)
                             .on("click", ".sod_option", _private.optionClick)
                             .on("mousemove", ".sod_option", _private.optionHover)
-                            .on("keydown keypress", _private.keyboardUse);
+                            .on("keydown", _private.keyboardUse);
 
                         // Bind change event to the <select>
                         $select.on("change", _private.selectChange);
-
-                        // Blur the SoD when clicking outside it
-                        $("html").on("click", function() {
-                            _private.blurSod($sod);
-                        });
 
                         // When a label for the native select is clicked we want to focus the SoD
                         $(document).on("click", "label[for='" + $select.attr("id") + "']", function(e) {
@@ -221,17 +218,23 @@
 
 
             focusSod: function (e) {
-                if( $(e.target).hasClass('sod_label') || $(e.target).hasClass('sod_option')){
+                // Fixes https://github.com/vestman/Select-or-Die/issues/7, thanks cah4a
+                if( $(e.target).hasClass("sod_label") || $(e.target).hasClass("sod_option") ) {
                     return;
                 }
 
                 var $sod        = $(this),
-                    $sodInFocus = $(".sod_select.focus");
+                    $sodInFocus = $(".sod_select.focus").not($sod);
 
                 // If not disabled we'll add focus (and blur other active SoD's)
                 if ( !$sod.hasClass("disabled") ) {
                     _private.blurSod($sodInFocus);
                     $sod.addClass("focus");
+
+                    // Blur the SoD when clicking outside it
+                    $("html").one("click", function() {
+                        _private.blurSod($sod);
+                    });
                 }
                 else {
                     _private.blurSod($sod);
@@ -269,7 +272,7 @@
                 else {
                     // Clears viewport check timeout
                     clearTimeout($_sodViewportTimeout);
-                    $sod.removeClass("open above");
+                    $sod.removeClass("open");
                 }
             }, // triggerSod
 
@@ -281,34 +284,7 @@
                     $sodLabel       = $sod.find(".sod_label"),
                     $sodCycle       = $sod.data("cycle"),
                     $optionActive   = $sodOptions.filter(".active"),
-                    $sodFilterHit, $optionNext, $optionCycle, $scrollList, $scrollOption;
-
-                // "Filter" options list using keybaord based input
-                if ( e.which !== 0 && e.charCode !== 0 ) {
-                    // Clears data-filter timeout
-                    clearTimeout($_sodFilterTimeout);
-
-                    // Append the data-filter with typed character
-                    $sod.data("filter", $sod.data("filter") + String.fromCharCode(e.keyCode|e.charCode));
-
-                    // Check for matches of the typed string
-                    $sodFilterHit = $sodOptions.filter(function() {
-                        return $(this).text().toLowerCase().indexOf($sod.data("filter").toLowerCase()) === 0;
-                    }).not(".disabled, .optgroup").first();
-
-                    // If the typed value is a hit, then set it to active
-                    if ( $sodFilterHit.length ) {
-                        $optionActive.removeClass("active");
-                        $sodFilterHit.addClass("active");
-                        _private.listScroll($sodList, $sodFilterHit);
-                        $sodLabel.get(0).lastChild.nodeValue = $sodFilterHit.text();
-                    }
-
-                    // Set a timeout to empty the data-filter
-                    $_sodFilterTimeout = setTimeout( function() {
-                        $sod.data("filter", "");
-                    }, 500);
-                }
+                    $sodFilterHit, $optionNext, $optionCycle;
 
                 // Highlight prev/next element if up/down key pressed
                 if ( e.which > 36 && e.which < 41 ) {
@@ -334,21 +310,61 @@
                         $optionNext.addClass("active");
                         $sodLabel.get(0).lastChild.nodeValue = $optionNext.text();
                         _private.listScroll($sodList, $optionNext);
+
+                        // If the user used his keys when the SoD was closed we'll
+                        // update the $_sodKeysWhenClosed flag that we use in blurSod()
+                        if ( !$sod.hasClass("open") ) {
+                            $_sodKeysWhenClosed = true;
+                            // $sod.data("closed-keys", true);
+                        }
+
                     }
 
                     // Disables the up/down keys from scrolling the page
                     return false;
                 }
-                else if ( e.which === 13 || (e.which === 32 && $sod.hasClass("open") && $sod.data("filter") === "") ) { // Enter key or space, simulate click() function
+                else if ( e.which === 13 || (e.which === 32 && $sod.hasClass("open") && ($sod.data("filter")[0] === ' ' || $sod.data("filter") === "") ) ) { // Enter key or space, simulate click() function
                     e.preventDefault();
                     $optionActive.click();
                 }
-                else if ( e.which === 32 && !$sod.hasClass("open") && $sod.data("filter") === "" ) { // Space bar, Opens the SoD if already closed
+                else if ( e.which === 32 && !$sod.hasClass("open") && ($sod.data("filter")[0] === ' ' || $sod.data("filter") === "") ) { // Space bar, Opens the SoD if already closed
                     e.preventDefault();
+                    $_sodKeysWhenClosed = false;
                     $sod.click();
                 }
-                else if ( e.which === 27 ) { // Esc key, hides dropdown
+                else if ( e.which === 27 ) { // Esc key, blur the SoD
                     _private.blurSod($sod);
+                }
+
+                // "Filter" options list using keybaord based input
+                if ( e.which !== 0) {
+                    // Clears data-filter timeout
+                    clearTimeout($_sodFilterTimeout);
+
+                    // Append the data-filter with typed character
+                    $sod.data("filter", $sod.data("filter") + String.fromCharCode(e.which));
+
+                    // Check for matches of the typed string
+                    $sodFilterHit = $sodOptions.filter(function() {
+                        return $(this).text().toLowerCase().indexOf($sod.data("filter").toLowerCase()) === 0;
+                    }).not(".disabled, .optgroup").first();
+
+                    // If the typed value is a hit, then set it to active
+                    if ( $sodFilterHit.length ) {
+                        $optionActive.removeClass("active");
+                        $sodFilterHit.addClass("active");
+                        _private.listScroll($sodList, $sodFilterHit);
+                        $sodLabel.get(0).lastChild.nodeValue = $sodFilterHit.text();
+
+                        if ( !$sod.hasClass("open") ) {
+                            $_sodKeysWhenClosed = true;
+                        }
+                    }
+
+                    // Set a timeout to empty the data-filter
+                    $_sodFilterTimeout = setTimeout( function() {
+                        $sod.data("filter", "");
+                    }, 500);
                 }
             }, // keyboardUse
 
@@ -372,7 +388,8 @@
                     $optionOptgroup = $clicked.hasClass("optgroup"),
                     $optionIndex    = $sod.find(".sod_option:not('.optgroup')").index(this);
 
-                if ($sod.hasClass("touch")) {
+                // Fixes https://github.com/vestman/Select-or-Die/issues/8, thanks builtbylane
+                if ( $sod.hasClass("touch") ) {
                     return;
                 }
 
@@ -388,7 +405,7 @@
                 clearTimeout($_sodViewportTimeout);
 
                 // Hide the list
-                $sod.removeClass("open above");
+                $sod.removeClass("open");
             }, // optionClick
 
 
@@ -426,7 +443,7 @@
                     // Check the $sod for changes. If the user has used his keys when the SoD was closed
                     // we'll set the currently active option to selected. If the user used his keys when
                     // the SoD was open but didn't make a selection, then we'll restore the SoD
-                    if ( $sod.hasClass("focus") && !$sod.hasClass("open" ) ) {
+                    if ( $_sodKeysWhenClosed && !$optionActive.hasClass("selected") ) {
                         $optionActive.click();
                     }
                     else if ( !$optionActive.hasClass("selected") ) {
@@ -435,9 +452,14 @@
                         $optionSelected.addClass("active");
                     }
 
-                    // Remove above/open class
-                    $sod.removeClass("open focus above");
+                    // Reset the flag indicating whether the user has used his arrow keys when the SoD
+                    // was closed or not
+                    $_sodKeysWhenClosed = false;
 
+                    // Remove open/focus class
+                    $sod.removeClass("open focus");
+
+                    // Blur the SOD
                     $sod.blur();
                 }
             }, // blurSod
@@ -476,7 +498,7 @@
 
 
             isTouch: function () {
-                return (('ontouchstart' in window) || (navigator.MaxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0));
+                return (("ontouchstart" in window) || (navigator.MaxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0));
             } // isTouch
 
         };
@@ -484,7 +506,7 @@
         var methods = {
 
             destroy: function () {
-                return this.each(function (i) {
+                return this.each(function () {
                     var $select = $(this),
                         $sod    = $select.parent();
 
@@ -504,7 +526,7 @@
 
 
             update: function () {
-                return this.each(function (i) {
+                return this.each(function () {
                     var $select  = $(this),
                         $sod     = $select.parent(),
                         $sodList = $sod.find(".sod_list:first");
@@ -523,7 +545,7 @@
                         }
 
                         // Inserts a <span class="sod_option"> for each <option>
-                        $("option, optgroup", $select).each(function (i) {
+                        $("option, optgroup", $select).each(function () {
                             _private.populateSoD($(this), $sodList, $sod);
                         });
                     } else {
@@ -535,7 +557,7 @@
 
 
             disable: function ($value) {
-                return this.each(function (i) {
+                return this.each(function () {
                     var $select = $(this),
                         $sod    = $select.parent();
 
@@ -562,7 +584,7 @@
 
 
             enable: function ($value) {
-                return this.each(function (i) {
+                return this.each(function () {
                     var $select = $(this),
                         $sod    = $select.parent();
 
