@@ -28,8 +28,7 @@
 
         <!-- Photo from https://www.flickr.com/photos/nlireland/11833296283/ - Found at http://nos.twnsnd.co/ -->
 
-        <select class="well_hello_there" data-placeholder-option="true" data-custom-class="cover_sod no_highlight">
-            <option value="null">Select or Die?</option>
+        <select class="well_hello_there" data-placeholder="Select or Die" data-custom-class="cover_sod no_highlight">
             <option value="#intro">What?</option>
             <option value="#config">Config</option>
             <option value="#methods">Methods</option>
@@ -97,17 +96,6 @@
                                 <a href="#placeholder" title="placeholder">placeholder</a> - <span class="type">string</span>
                             </div>
                             Add a placeholder that's show before a selection has been made
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td class="option"><a href="#placeholderOption" title="placeholderOption">placeholderOption</a></td>
-                        <td class="option">boolean</td>
-                        <td>
-                            <div class="hidden option">
-                                <a href="#placeholder" title="placeholder">placeholderOption</a> - <span class="type">boolean</span>
-                            </div>
-                            As above, but uses the first option as a placeholder
                         </td>
                     </tr>
 
@@ -230,7 +218,7 @@
             <header>
                 <h1>Custom class/ID</h1>
                 <p><span class="option">""</span> by default</p>
-                <p>Maybe you have multiple selects on the same page and one should look different, or whatever need you can find for a custom class/ID. In this example we're using a custom class to give the SoD a different look.</p>
+                <p>Maybe you have multiple selects on the same page and one should look different, or whatever need you can find for a custom class/ID. In this example we're using a custom class give the SoD a different look.</p>
             </header>
 
             <pre>
@@ -267,7 +255,7 @@ $("select").selectOrDie();
 
         <div class="content arrow">
             <header>
-                <h1>Placeholder - alt. 1</h1>
+                <h1>Placeholder</h1>
                 <p><span class="option">null</span> by default</p>
                 <p>If you feel like adding a placeholder that's displayed before anything is selected. Once a selection has been made the placeholder will be removed until the user clicks the SoD again, then it will be shown until the user makes a new selection or focus is lost on the SoD. The "placeholder" is given the class <span class="option">.sod_placeholder</span></p>
             </header>
@@ -297,48 +285,13 @@ $("select").selectOrDie();
     </section>
 
 
-    <section id="placeholderOption">
-
-        <div class="content arrow">
-            <header>
-                <h1>Placeholder - alt. 2</h1>
-                <p><span class="option">false</span> by default</p>
-                <p>From version v0.1.8 you can set the first <span class="option">&lt;option&gt;</span> to be used as a placeholder. It works pretty much as the <a href="#placeholder" title="placeholder">placeholder</a> option above. The main difference is that the first <span class="option">&lt;option&gt;</span> will not be visible in the SoD other than as a placeholder.</p>
-            </header>
-
-            <pre>
-$("select").selectOrDie({
-    placeholderOption: true
-});</pre>
-
-            <p>or</p>
-
-            <pre>
-$("select").selectOrDie();
-&lt;select data-placeholder-option="true"&gt;</pre>
-        </div>
-
-        <div class="preview">
-            <select class="basic" data-placeholder-option="true">
-                <option value="null">Choose a number</option>
-                <option value="one">One</option>
-                <option value="two">Two</option>
-                <option value="three">Three</option>
-                <option value="four">Four</option>
-                <option value="five">Five</option>
-            </select>
-        </div>
-
-    </section>
-
-
     <section id="prefix">
 
         <div class="content arrow">
             <header>
                 <h1>Prefix</h1>
                 <p><span class="option">null</span> by default</p>
-                <p>Add a prefix that's displayed in front of the selected option. The "prefix" is given the class <span class="option">.sod_prefix</span>. If a prefix is set then both the <a href="#placeholder">placeholder</a> and <a href="#placeholderOption">placeholderOption</a> options will be ignored.</p>
+                <p>Add a prefix that's displayed in front of the selected option. The "prefix" is given the class <span class="option">.sod_prefix</span>,</p>
             </header>
 
             <pre>
@@ -413,20 +366,19 @@ $("select").selectOrDie();
             <pre>
 $("select").selectOrDie({
     links: true,
-    // Option below is not needed
-    placeholderOption: true
+    placeholder: "Go to...",
+    customClass: "no_highlight"
 });</pre>
 
             <p>or</p>
 
             <pre>
 $("select").selectOrDie();
-&lt;select data-links="true" data-placeholder-option="true"&gt;</pre>
+&lt;select data-links="true" data-placeholder="Go to..." data-custom-class="no_highlight"&gt;</pre>
         </div>
 
         <div class="preview">
-            <select class="basic" data-links="true"  data-placeholder-option="true">
-                <option value="#">Go to...</option>
+            <select class="basic" data-links="true" data-placeholder="Go to..." data-custom-class="no_highlight">
                 <option value="https://github.com/vestman/">GitHub</option>
                 <option value="http://dribbble.com/MyBeardAndI/">Dribbble</option>
                 <option value="http://twitter.com/MyBeardAndI">Twitter</option>
@@ -714,7 +666,6 @@ $("select").selectOrDie({
             </header>
 
             <p>Download the .zip file by clicking the download button below. Once downloaded, unzip it and include the <span class="option">selectordie.css</span> and either of the two <span class="option">.js</span> files found in the "_src" folder. Initialize the plugin, targeting the desired element in the jQuery selector. Just like in the <a href="#basic">basic</a> example above. Then you're all good!</p>
-            <p>If you use the SoD I'd love to hear about it. Send a tweet to <a class="external" href="http://twitter.com/MyBeardAndI">@mybeardandi</a>.</p>
 
             <p class="buttons">
                 <a href="https://github.com/vestman/Select-or-Die/archive/master.zip" class="external button">Download</a>
@@ -774,7 +725,7 @@ $("select").selectOrDie({
 
             <ul class="list">
                 <li>Tested with jQuery v1.8 and jQuery v2.1 and nothing in between (it should work just fine with a version in between the tested versions). Please note that if you use jQuery 2.x IE8 will not be supported, you can read more about this over att the <a class="external" href="http://blog.jquery.com/2013/04/18/jquery-2-0-released/" title="http://blog.jquery.com/2013/04/18/jquery-2-0-released/">jQuery blog</a>.</li>
-                <li>Tested in Firefox / Chrome / Safari / Opera / IE8+ (yes, for real this time)</li>
+                <li>Tested in Firefox / Chrome / Safari / Opera / IE8+</li>
                 <li>This demo is using <a class="external" href="http://trentrichardson.com/examples/jQuery-Litelighter/" title="http://trentrichardson.com/examples/jQuery-Litelighter/">jQuery Litelighter</a> by Trent Richardson. The jQuery Litelighter is NOT required by Select or Die, it's just used to format the code blocks in this demo.</li>
                 <li>Cover photo found over at <a class="external" href="http://nos.twnsnd.co/image/81190207271" title="http://nos.twnsnd.co/image/81190207271">New Old Stock</a></li>
             </ul>
