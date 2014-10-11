@@ -1,7 +1,7 @@
 /* ===========================================================
  *
- *  Name:          selectordie.css
- *  Updated:       2014-07-07
+ *  Name:          selectordie_dev.css
+ *  Updated:       2014-10-10
  *  Created by:    Per V @ Vst.mn
  *  What?:         Base CSS for Select or Die
  *
@@ -169,6 +169,11 @@
 
                 /* Children of an optgroup */
                 .sod_select .sod_option.groupchild { padding-left: 20px; }
+
+            /* Used together with placeholderOption / data-placeholder-option */
+            .sod_select .sod_option.is-placeholder {
+                display: none;
+            }
 
             /* Disabled option */
             .sod_select .sod_option.disabled

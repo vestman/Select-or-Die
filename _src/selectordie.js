@@ -1,8 +1,8 @@
 /* ===========================================================
  *
  *  Name:          selectordie.js
- *  Updated:       2014-10-09
- *  Version:       0.1.7
+ *  Updated:       2014-10-11
+ *  Version:       0.1.8
  *  Created by:    Per V @ Vst.mn
  *  What?:         The Select or Die JS
  *
@@ -21,17 +21,18 @@
     $.fn.selectOrDie = function (method) {
 
         var $defaults = {
-                customID:      null,          // String - "" by default - Adds an ID to the SoD
-                customClass:   "",            // String - "" by default - Adds a class to the SoD
-                placeholder:   null,          // String - "" by default - Adds a placeholder that will be shown before a selection has been made
-                prefix:        null,          // String - "" by default - Adds a prefix that always will be shown before the selected value
-                cycle:         false,         // Boolean - false by default - Should keyboard cycle through options or not?
-                stripEmpty:    false,         // Boolean - false by default - Should empty <option>'s be stripped from the <select>
-                links:         false,         // Boolean - false by default - Should the options be treated as links?
-                linksExternal: false,         // Boolean - false by default - Should the options be treated as links and open in a new window/tab?
-                size:          0,             // Integer - 0 by default - The value set equals the amount of items before scroll is needed
-                tabIndex:      0,             // integer - 0 by default
-                onChange:      $.noop         // Adds a callback function for when the SoD gets changed
+                customID:          null,      // String  - "" by default - Adds an ID to the SoD
+                customClass:       "",        // String  - "" by default - Adds a class to the SoD
+                placeholder:       null,      // String  - "" by default - Adds a placeholder that will be shown before a selection has been made
+                placeholderOption: false,     // Boolean - false by default - Same as above, but it uses the first option in the <select> as a placeholder (and hides it from the list)
+                prefix:            null,      // String  - "" by default - Adds a prefix that always will be shown before the selected value
+                cycle:             false,     // Boolean  - false by default - Should keyboard cycle through options or not?
+                stripEmpty:        false,     // Boolean  - false by default - Should empty <option>'s be stripped from the <select>
+                links:             false,     // Boolean  - false by default - Should the options be treated as links?
+                linksExternal:     false,     // Boolean  - false by default - Should the options be treated as links and open in a new window/tab?
+                size:              0,         // Integer  - 0 by default - The value set equals the amount of items before scroll is needed
+                tabIndex:          0,         // integer  - 0 by default
+                onChange:          $.noop     // Adds a callback function for when the SoD gets changed
             },
             $_settings = {},
             $_sodKeysWhenClosed = false,
@@ -45,22 +46,23 @@
                 return this.each(function () {
 
                     if ( !$(this).parent().hasClass("sod_select") ) {
-                        var $select                = $(this),
-                            $settingsId            = $_settings.customID ? $_settings.customID : ( $select.data("custom-id") ? $select.data("custom-id") : $_settings.customID ),
-                            $settingsClass         = $_settings.customClass ? $_settings.customClass : ( $select.data("custom-class") ? $select.data("custom-class") : $_settings.customClass ),
-                            $settingsPrefix        = $_settings.prefix ? $_settings.prefix : ( $select.data("prefix") ? $select.data("prefix") : $_settings.prefix ),
-                            $settingsPlaceholder   = $_settings.placeholder ? $_settings.placeholder : ( $select.data("placeholder") ? $select.data("placeholder") : $_settings.placeholder ),
-                            $settingsCycle         = ( $_settings.cycle || $select.data("cycle") ) ? true : $_settings.cycle,
-                            $settingsLinks         = ( $_settings.links || $select.data("links") ) ? true : $_settings.links,
-                            $settingsLinksExternal = ( $_settings.linksExternal || $select.data("links-external") ) ? true : $_settings.linksExternal,
-                            $settingsSize          = $_settings.size ? $_settings.size : ( $select.data("size") ? $select.data("size") : $_settings.size ),
-                            $settingsTabIndex      = $_settings.tabIndex ? $_settings.tabIndex : ( $select.data("tabindex") ? $select.data("tabindex") : ( $select.attr("tabindex") ? $select.attr("tabindex") : $_settings.tabIndex ) ),
-                            $settingsStripEmpty    = ( $_settings.stripEmpty || $select.data("strip-empty") ) ? true : $_settings.stripEmpty,
-                            $selectTitle           = $select.prop("title") ? $select.prop("title") : null,
-                            $selectDisabled        = $select.is(":disabled") ? " disabled" : "",
-                            $sodPrefix             = "",
-                            $sodHtml               = "",
-                            $sodHeight             = 0,
+                        var $select                    = $(this),
+                            $settingsId                = $select.data("custom-id") ? $select.data("custom-id") : $_settings.customID,
+                            $settingsClass             = $select.data("custom-class") ? $select.data("custom-class") : $_settings.customClass,
+                            $settingsPrefix            = $select.data("prefix") ? $select.data("prefix") : $_settings.prefix,
+                            $settingsPlaceholder       = $select.data("placeholder") ? $select.data("placeholder") : $_settings.placeholder,
+                            $settingsPlaceholderOption = $select.data("placeholder-option") ? $select.data("placeholder-option") : $_settings.placeholderOption,
+                            $settingsCycle             = $select.data("cycle") ? $select.data("cycle") : $_settings.cycle,
+                            $settingsLinks             = $select.data("links") ? $select.data("links") : $_settings.links,
+                            $settingsLinksExternal     = $select.data("links-external") ? $select.data("links-external") : $_settings.linksExternal,
+                            $settingsSize              = parseInt($select.data("size")) ? $select.data("size") : $_settings.size,
+                            $settingsTabIndex          = parseInt($select.data("tabindex")) ? $select.data("tabindex") : ( $_settings.tabIndex ? $_settings.tabIndex : ( $select.attr("tabindex") ? $select.attr("tabindex") : $_settings.tabIndex ) ),
+                            $settingsStripEmpty        = $select.data("strip-empty") ? $select.data("strip-empty") : $_settings.stripEmpty,
+                            $selectTitle               = $select.prop("title") ? $select.prop("title") : null,
+                            $selectDisabled            = $select.is(":disabled") ? " disabled" : "",
+                            $sodPrefix                 = "",
+                            $sodHtml                   = "",
+                            $sodHeight                 = 0,
                             $sod, $sodListWrapper, $sodList;
 
                         // If there's a prefix defined
@@ -78,17 +80,18 @@
 
                         // Inserts a new element that will act like our new <select>
                         $sod = $("<span/>", {
-                            id:                    $settingsId,
-                            "class":               "sod_select " + $settingsClass + $selectDisabled,
-                            title:                 $selectTitle,
-                            tabindex:              $settingsTabIndex,
-                            html:                  $sodHtml,
-                            "data-cycle":          $settingsCycle,
-                            "data-links":          $settingsLinks,
-                            "data-links-external": $settingsLinksExternal,
-                            "data-placeholder":    $settingsPlaceholder,
-                            "data-prefix":         $settingsPrefix,
-                            "data-filter":         ""
+                            id:                        $settingsId,
+                            "class":                   "sod_select " + $settingsClass + $selectDisabled,
+                            title:                     $selectTitle,
+                            tabindex:                  $settingsTabIndex,
+                            html:                      $sodHtml,
+                            "data-cycle":              $settingsCycle,
+                            "data-links":              $settingsLinks,
+                            "data-links-external":     $settingsLinksExternal,
+                            "data-placeholder":        $settingsPlaceholder,
+                            "data-placeholder-option": $settingsPlaceholderOption,
+                            "data-prefix":             $settingsPrefix,
+                            "data-filter":             ""
                         }).insertAfter( this );
 
                         // If it's a touch device
@@ -107,14 +110,15 @@
                         }).appendTo($sodListWrapper);
 
                         // Inserts an option <span> for each <option>
-                        $("option, optgroup", $select).each(function () {
+                        $("option, optgroup", $select).each(function (i) {
                             var $this = $(this);
 
                             if ( $settingsStripEmpty && !$.trim($this.text()) ) { // Strip empty <option>'s from the <select>
                                 $this.remove();
-                            }
+                            } else if ( i === 0 && $settingsPlaceholderOption && !$sodPrefix )
+                                _private.populateSoD($this, $sodList, $sod, true);
                             else {
-                                _private.populateSoD($this, $sodList, $sod);
+                                _private.populateSoD($this, $sodList, $sod, false);
                             }
                         });
 
@@ -160,18 +164,21 @@
             }, // initSoD
 
 
-            populateSoD: function ($option, $sodList, $sod) {
-                var $sodPlaceholder     = $sod.data("placeholder"),
-                    $sodPrefix          = $sod.data("prefix"),
-                    $optionParent       = $option.parent(),
-                    $optionText         = $option.text(),
-                    $optionValue        = $option.val(),
-                    $optionCustomId     = $option.data("custom-id") ? $option.data("custom-id") : null,
-                    $optionCustomClass  = $option.data("custom-class") ? $option.data("custom-class") : "",
-                    $optionIsDisabled   = $option.is(":disabled") ? " disabled " : "",
-                    $optionIsSelected   = $option.is(":selected") ? " selected active " : "",
-                    $optionLink         = $option.data("link") ? " link " : "",
-                    $optionLinkExternal = $option.data("link-external") ? " linkexternal" : "";
+            populateSoD: function ($option, $sodList, $sod, $isPlaceholder) {
+                var $sodPlaceholder       = $sod.data("placeholder"),
+                    $sodPlaceholderOption = $sod.data("placeholder-option"),
+                    $sodPrefix            = $sod.data("prefix"),
+                    $sodLabel             = $sod.find(".sod_label"),
+                    $optionParent         = $option.parent(),
+                    $optionText           = $option.text(),
+                    $optionValue          = $option.val(),
+                    $optionCustomId       = $option.data("custom-id") ? $option.data("custom-id") : null,
+                    $optionCustomClass    = $option.data("custom-class") ? $option.data("custom-class") : "",
+                    $optionIsDisabled     = $option.is(":disabled") ? " disabled " : "",
+                    $optionIsSelected     = $option.is(":selected") ? " selected active " : "",
+                    $optionLink           = $option.data("link") ? " link " : "",
+                    $optionLinkExternal   = $option.data("link-external") ? " linkexternal" : "",
+                    $optgroupLabel        = $option.prop("label");
 
                 // Create <li> for each <option>
                 if ( $option.is("option") ) { // If <option>
@@ -183,17 +190,28 @@
                         "data-value": $optionValue
                     }).appendTo( $sodList );
 
-                    // If selected and no placeholder is set, update label
-                    if ( $optionIsSelected && !$sodPlaceholder || $optionIsSelected && $sodPrefix ) {
-                        $sod.find(".sod_label").append($optionText);
-                    }
-
                     // Set the SoD data-label (used in the blur event)
-                    if ( $optionIsSelected && $sodPlaceholder && !$sodPrefix ) {
+                    if ( $isPlaceholder && !$sodPrefix ) { // Various things if the first option should be used as a placeholder
+                        $sod.data("label", $optionText);
+                        $sod.data("placeholder", $optionText);
+                        $option.prop("disabled", true);
+                        $sodList.find(".sod_option:last").addClass("is-placeholder disabled");
+
+                        if ( $optionIsSelected ) {
+                            $sodLabel.addClass("sod_placeholder");
+                        }
+                    }
+                    else if ( $optionIsSelected && $sodPlaceholder && !$sodPlaceholderOption && !$sodPrefix ) { // If the option is selected and the placeholder option is used
                         $sod.data("label", $sodPlaceholder);
                     }
-                    else if ( $optionIsSelected ) {
+                    else if ( $optionIsSelected ) { // If the option is selected
                         $sod.data("label", $optionText);
+                    }
+
+                    // If selected and no placeholder is set, update label,
+                    // added in v.0.1.8: if the placeholder-option is set we'll update the label
+                    if ( $optionIsSelected && !$sodPlaceholder || $optionIsSelected && $sodPlaceholderOption || $optionIsSelected && $sodPrefix ) {
+                        $sodLabel.append($optionText);
                     }
 
                     // If child of an <optgroup>
@@ -209,30 +227,24 @@
                 else { // If <<optgroup>
                     $("<span/>", {
                         "class":      "sod_option optgroup " + $optionIsDisabled,
-                        title:        $option.prop("label"),
-                        html:         $option.prop("label"),
-                        "data-label": $option.prop("label")
+                        title:        $optgroupLabel,
+                        html:         $optgroupLabel,
+                        "data-label": $optgroupLabel
                     }).appendTo( $sodList );
                 }
             }, // populateSoD
 
 
-            focusSod: function (e) {
-                // Fixes https://github.com/vestman/Select-or-Die/issues/7, thanks cah4a
-                if( $(e.target).hasClass("sod_label") || $(e.target).hasClass("sod_option") ) {
-                    return;
-                }
-
-                var $sod        = $(this),
-                    $sodInFocus = $(".sod_select.focus").not($sod);
+            focusSod: function () {
+                var $sod = $(this);
 
                 // If not disabled we'll add focus (and blur other active SoD's)
                 if ( !$sod.hasClass("disabled") ) {
-                    _private.blurSod($sodInFocus);
+                    _private.blurSod($(".sod_select.focus").not($sod));
                     $sod.addClass("focus");
 
                     // Blur the SoD when clicking outside it
-                    $("html").one("click", function() {
+                    $("html").on("click.sodBlur", function() {
                         _private.blurSod($sod);
                     });
                 }
@@ -248,15 +260,13 @@
                 var $sod            = $(this),
                     $sodList        = $sod.find(".sod_list"),
                     $sodPlaceholder = $sod.data("placeholder"),
+                    $optionActive   = $sod.find(".active"),
                     $optionSelected = $sod.find(".selected");
 
                 // Trigger the SoD if it's not disabled, already open or a touch device
                 if ( !$sod.hasClass("disabled") && !$sod.hasClass("open") && !$sod.hasClass("touch") ) {
                     // Add the .open class to display list
                     $sod.addClass("open");
-
-                    // Close all other SoD's except for the current one
-                    $(".sod_select").not(this).removeClass("open focus");
 
                     // If a placeholder is set, then show it
                     if ( $sodPlaceholder && !$sod.data("prefix") ) {
@@ -273,6 +283,12 @@
                     // Clears viewport check timeout
                     clearTimeout($_sodViewportTimeout);
                     $sod.removeClass("open");
+
+                    // If a placeholder is set, make sure the placeholder text is removed if
+                    // the user toggles the select using his mouse
+                    if ( $sodPlaceholder ) {
+                        $sod.find(".sod_label").get(0).lastChild.nodeValue = $optionActive.text();
+                    }
                 }
             }, // triggerSod
 
@@ -433,23 +449,31 @@
 
             blurSod: function ($sod) {
                 if ( $("body").find($sod).length ) {
-                    var $sodLabel       = $sod.data("label"),
-                        $optionActive   = $sod.find(".active"),
-                        $optionSelected = $sod.find(".selected");
+                    var $sodLabel         = $sod.data("label"),
+                        $sodPlaceholder   = $sod.data("placeholder"),
+                        $optionActive     = $sod.find(".active"),
+                        $optionSelected   = $sod.find(".selected"),
+                        $optionHasChanged = false;
 
                     // Clear viewport check timeout
                     clearTimeout($_sodViewportTimeout);
 
                     // Check the $sod for changes. If the user has used his keys when the SoD was closed
                     // we'll set the currently active option to selected. If the user used his keys when
-                    // the SoD was open but didn't make a selection, then we'll restore the SoD
+                    // the SoD was open but did NOT make a selection, then we'll restore the SoD
                     if ( $_sodKeysWhenClosed && !$optionActive.hasClass("selected") ) {
                         $optionActive.click();
+                        $optionHasChanged = true;
                     }
                     else if ( !$optionActive.hasClass("selected") ) {
-                        $sod.find(".sod_label").get(0).lastChild.nodeValue = $sodLabel;
                         $optionActive.removeClass("active");
                         $optionSelected.addClass("active");
+                    }
+
+                    if ( !$optionHasChanged && $sodPlaceholder ) {
+                        $sod.find(".sod_label").get(0).lastChild.nodeValue = $optionSelected.text();
+                    } else if ( !$optionHasChanged ) {
+                        $sod.find(".sod_label").get(0).lastChild.nodeValue = $sodLabel;
                     }
 
                     // Reset the flag indicating whether the user has used his arrow keys when the SoD
@@ -461,6 +485,9 @@
 
                     // Blur the SOD
                     $sod.blur();
+
+                    // Unbind the
+                    $("html").off(".sodBlur");
                 }
             }, // blurSod
 
