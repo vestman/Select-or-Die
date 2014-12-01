@@ -1,8 +1,8 @@
 /* ===========================================================
  *
  *  Name:          selectordie.js
- *  Updated:       2014-10-11
- *  Version:       0.1.8
+ *  Updated:       2014-11-30
+ *  Version:       0.1.9
  *  Created by:    Per V @ Vst.mn
  *  What?:         The Select or Die JS
  *
@@ -261,7 +261,8 @@
                     $sodList        = $sod.find(".sod_list"),
                     $sodPlaceholder = $sod.data("placeholder"),
                     $optionActive   = $sod.find(".active"),
-                    $optionSelected = $sod.find(".selected");
+                    $optionSelected = $sod.find(".selected"),
+                    $touchOpen      = $sod.data('touch_open');
 
                 // Trigger the SoD if it's not disabled, already open or a touch device
                 if ( !$sod.hasClass("disabled") && !$sod.hasClass("open") && !$sod.hasClass("touch") ) {
@@ -278,6 +279,19 @@
 
                     // Check if the option list fits in the viewport
                     _private.checkViewport($sod, $sodList);
+                }
+                else if (!$touchOpen && $sod.hasClass("touch")) {
+                //Open native select on touch device
+                    $sod.data('touch_open', true);
+
+                    // If a placeholder is set, then show it
+                    if ( $sodPlaceholder && !$sod.data("prefix") ) {
+                        $sod.find(".sod_label").addClass("sod_placeholder").html($sodPlaceholder);
+                    }
+                }
+                else if ($touchOpen && $sod.hasClass("touch")) {
+                // Native select closed on touch
+                  $sod.data('touch_open', false);
                 }
                 else {
                     // Clears viewport check timeout
@@ -429,9 +443,22 @@
                 var $select         = $(this),
                     $optionSelected = $select.find(":selected"),
                     $optionText     = $optionSelected.text(),
-                    $sod            = $select.closest(".sod_select");
+                    $sod            = $select.closest(".sod_select"),
+                    $sodLabel       = $sod.find(".sod_label"),
+                    $sodList       = $sod.find(".sod_list .sod_option");
 
-                $sod.find(".sod_label").get(0).lastChild.nodeValue = $optionText;
+                //Set label to selected value
+                $sodLabel.text($optionText);
+
+                //Set "selected" class on sod_list because blurSod uses it to determine current selected value
+                $sodList.removeClass('selected');
+                $sodList.each(function() {
+                    var $this = $(this);
+                    if ($this.data('value') === $select.val()) {
+                      $this.addClass('selected');
+                    }
+                });
+
                 $sod.data("label", $optionText);
 
                 // Triggers the onChange callback
