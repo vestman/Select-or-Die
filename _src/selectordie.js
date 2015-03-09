@@ -170,7 +170,7 @@
                     $sodPrefix            = $sod.data("prefix"),
                     $sodLabel             = $sod.find(".sod_label"),
                     $optionParent         = $option.parent(),
-                    $optionText           = $option.text(),
+                    $optionText           = $option.html(),
                     $optionValue          = $option.val(),
                     $optionCustomId       = $option.data("custom-id") ? $option.data("custom-id") : null,
                     $optionCustomClass    = $option.data("custom-class") ? $option.data("custom-class") : "",
