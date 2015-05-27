@@ -32,6 +32,7 @@
                 linksExternal:     false,     // Boolean  - false by default - Should the options be treated as links and open in a new window/tab?
                 size:              0,         // Integer  - 0 by default - The value set equals the amount of items before scroll is needed
                 tabIndex:          0,         // integer  - 0 by default
+                trigger:           "click"    // String   - "click" by default - Supports "hover" action to open the SoD
                 onChange:          $.noop     // Adds a callback function for when the SoD gets changed
             },
             $_settings = {},
@@ -141,9 +142,14 @@
                         $select.appendTo( $sod );
 
                         // Bind events to the SoD
-                        $sod.on("focusin", _private.focusSod)
-                            .on("click", _private.triggerSod)
-                            .on("click", ".sod_option", _private.optionClick)
+                        if ($_settings.trigger === "hover") { // if trigger configuration is hover
+                            $sod.on("mouseenter", _private.triggerSod)
+                                .on("mouseleave", _private.triggerSod);
+                        } else {
+                            $sod.on("focusin", _private.focusSod)
+                                .on("click", _private.triggerSod);
+                        }
+                        $sod.on("click", ".sod_option", _private.optionClick)
                             .on("mousemove", ".sod_option", _private.optionHover)
                             .on("keydown", _private.keyboardUse);
 
