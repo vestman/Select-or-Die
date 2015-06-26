@@ -13,6 +13,8 @@
  *
  *  Oddny | Cogs 'n Kegs
  *
+ *  @preserve
+ *
  * =========================================================== */
 
 ; (function ($) {
@@ -470,7 +472,7 @@
                         $optionSelected.addClass("active");
                     }
 
-                    if ( !$optionHasChanged && $sodPlaceholder ) {
+                    if ( !$optionHasChanged && $sodPlaceholder && !$sod.hasClass('touch') ) {
                         $sod.find(".sod_label").get(0).lastChild.nodeValue = $optionSelected.text();
                     } else if ( !$optionHasChanged ) {
                         $sod.find(".sod_label").get(0).lastChild.nodeValue = $sodLabel;
