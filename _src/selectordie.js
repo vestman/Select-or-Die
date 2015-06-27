@@ -557,7 +557,7 @@
 
 
             update: function () {
-                return this.each(function () {
+                this.each(function () {
                     var $select  = $(this),
                         $sod     = $select.parent(),
                         $sodList = $sod.find(".sod_list:first");
@@ -584,6 +584,7 @@
                     }
                 });
 
+                return methods['updateLabel'].apply(this);
             }, // update
 
 
@@ -638,7 +639,35 @@
                         console.log("Select or Die: There's no SoD to enable");
                     }
                 });
-            } // enable
+            }, // enable
+
+
+            updateLabel: function() {
+              return this.each(function () {
+                var $select = $(this),
+                  $sod = $select.parent(),
+                  $sodPlaceholder = $sod.data("placeholder"),
+                  $sodPlaceholderOption = $sod.data("placeholder-option"),
+                  $sodPrefix = $sod.data("prefix"),
+                  $sodLabel = $sod.find(".sod_label"),
+                  $sodText = null;
+
+                if ($select.val()) {
+                  $sodText = $select.find('option[value="' + $select.val() + '"]').text();
+                }
+                else {
+                  if ($sodPlaceholderOption) {
+                    $sodText = $select.find('option[value="' + $sodPlaceholderOption + '"]').text();
+                  }
+                  else {
+                    $sodText = $sodPlaceholder;
+                  }
+                  $sodLabel.addClass("sod_placeholder");
+                }
+                $sod.data("label", $sodText);
+                $sodLabel.text($sodText);
+              });
+            } // updateLabel
 
         };
 
