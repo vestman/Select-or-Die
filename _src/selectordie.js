@@ -13,6 +13,8 @@
  *
  *  Oddny | Cogs 'n Kegs
  *
+ *  @preserve
+ *
  * =========================================================== */
 
 ; (function ($) {
@@ -32,7 +34,8 @@
                 linksExternal:     false,     // Boolean  - false by default - Should the options be treated as links and open in a new window/tab?
                 size:              0,         // Integer  - 0 by default - The value set equals the amount of items before scroll is needed
                 tabIndex:          0,         // integer  - 0 by default
-                onChange:          $.noop     // Adds a callback function for when the SoD gets changed
+                onChange:          $.noop,    // Adds a callback function for when the SoD gets changed
+                forceNative:       false      // Forces native select
             },
             $_settings = {},
             $_sodKeysWhenClosed = false,
@@ -58,6 +61,7 @@
                             $settingsSize              = parseInt($select.data("size")) ? $select.data("size") : $_settings.size,
                             $settingsTabIndex          = parseInt($select.data("tabindex")) ? $select.data("tabindex") : ( $_settings.tabIndex ? $_settings.tabIndex : ( $select.attr("tabindex") ? $select.attr("tabindex") : $_settings.tabIndex ) ),
                             $settingsStripEmpty        = $select.data("strip-empty") ? $select.data("strip-empty") : $_settings.stripEmpty,
+                            $forceNative               = $select.data("force-native") ? $select.data("force-native") : $_settings.forceNative,
                             $selectTitle               = $select.prop("title") ? $select.prop("title") : null,
                             $selectDisabled            = $select.is(":disabled") ? " disabled" : "",
                             $sodPrefix                 = "",
@@ -95,7 +99,7 @@
                         }).insertAfter( this );
 
                         // If it's a touch device
-                        if ( _private.isTouch() ) {
+                        if ( _private.isTouch() || $forceNative ) {
                             $sod.addClass("touch");
                         }
 
@@ -470,7 +474,7 @@
                         $optionSelected.addClass("active");
                     }
 
-                    if ( !$optionHasChanged && $sodPlaceholder ) {
+                    if ( !$optionHasChanged && $sodPlaceholder && !$sod.hasClass('touch') ) {
                         $sod.find(".sod_label").get(0).lastChild.nodeValue = $optionSelected.text();
                     } else if ( !$optionHasChanged ) {
                         $sod.find(".sod_label").get(0).lastChild.nodeValue = $sodLabel;
@@ -553,7 +557,7 @@
 
 
             update: function () {
-                return this.each(function () {
+                this.each(function () {
                     var $select  = $(this),
                         $sod     = $select.parent(),
                         $sodList = $sod.find(".sod_list:first");
@@ -580,6 +584,7 @@
                     }
                 });
 
+                return methods['updateLabel'].apply(this);
             }, // update
 
 
@@ -634,7 +639,35 @@
                         console.log("Select or Die: There's no SoD to enable");
                     }
                 });
-            } // enable
+            }, // enable
+
+
+            updateLabel: function() {
+              return this.each(function () {
+                var $select = $(this),
+                  $sod = $select.parent(),
+                  $sodPlaceholder = $sod.data("placeholder"),
+                  $sodPlaceholderOption = $sod.data("placeholder-option"),
+                  $sodPrefix = $sod.data("prefix"),
+                  $sodLabel = $sod.find(".sod_label"),
+                  $sodText = null;
+
+                if ($select.val()) {
+                  $sodText = $select.find('option[value="' + $select.val() + '"]').text();
+                }
+                else {
+                  if ($sodPlaceholderOption) {
+                    $sodText = $select.find('option[value="' + $sodPlaceholderOption + '"]').text();
+                  }
+                  else {
+                    $sodText = $sodPlaceholder;
+                  }
+                  $sodLabel.addClass("sod_placeholder");
+                }
+                $sod.data("label", $sodText);
+                $sodLabel.text($sodText);
+              });
+            } // updateLabel
 
         };
 
