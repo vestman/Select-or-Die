@@ -4,7 +4,9 @@
  *  Updated:       2014-10-11
  *  Version:       0.1.8
  *  Created by:    Per V @ Vst.mn
+ *  Updated by:    Raj Kumar
  *  What?:         The Select or Die JS
+ *  Update motive: Issue Fixes & improvements
  *
  *  Copyright (c) 2014 Per Vestman
  *  Dual licensed under the MIT and GPL licenses.
@@ -31,7 +33,7 @@
                 links:             false,     // Boolean  - false by default - Should the options be treated as links?
                 linksExternal:     false,     // Boolean  - false by default - Should the options be treated as links and open in a new window/tab?
                 size:              0,         // Integer  - 0 by default - The value set equals the amount of items before scroll is needed
-                tabIndex:          0,         // integer  - 0 by default
+                tabIndex:          0,        // integer  - 0 by default
                 onChange:          $.noop     // Adds a callback function for when the SoD gets changed
             },
             $_settings = {},
@@ -295,12 +297,20 @@
 
             keyboardUse: function (e) {
                 var $sod            = $(this),
+                    $select         = $(this).find("select"),
                     $sodList        = $sod.find(".sod_list"),
                     $sodOptions     = $sod.find(".sod_option"),
                     $sodLabel       = $sod.find(".sod_label"),
                     $sodCycle       = $sod.data("cycle"),
                     $optionActive   = $sodOptions.filter(".active"),
                     $sodFilterHit, $optionNext, $optionCycle;
+
+                var beFocused = function() {
+                    if ( !$sod.hasClass("open") ) {
+                       $optionNext.click();
+                       $select.focus();
+                    }
+                }
 
                 // Highlight prev/next element if up/down key pressed
                 if ( e.which > 36 && e.which < 41 ) {
@@ -309,10 +319,12 @@
                     if ( e.which === 37 || e.which === 38 ) { // Left/Up key
                         $optionNext  = $optionActive.prevAll(":not('.disabled, .optgroup')").first();
                         $optionCycle = $sodOptions.not(".disabled, .optgroup").last();
+                        beFocused();
                     }
                     else if ( e.which === 39 || e.which === 40 ) { // Right/Down key
                         $optionNext  = $optionActive.nextAll(":not('.disabled, .optgroup')").first();
                         $optionCycle = $sodOptions.not(".disabled, .optgroup").first();
+                        beFocused();
                     }
 
                     // If there's no option before/after and cycle is enabled
@@ -339,7 +351,11 @@
                     // Disables the up/down keys from scrolling the page
                     return false;
                 }
-                else if ( e.which === 13 || (e.which === 32 && $sod.hasClass("open") && ($sod.data("filter")[0] === ' ' || $sod.data("filter") === "") ) ) { // Enter key or space, simulate click() function
+                else if ( e.which === 13 ) { // Enter key, opens the dropdown list like in native `select`
+                    e.preventDefault();
+                    $sod.addClass("open");
+                }
+                else if ( e.which === 32 && $sod.hasClass("open") && ($sod.data("filter")[0] === ' ' || $sod.data("filter") === "") ) { // Space, simulate click() function
                     e.preventDefault();
                     $optionActive.click();
                 }
@@ -350,6 +366,9 @@
                 }
                 else if ( e.which === 27 ) { // Esc key, blur the SoD
                     _private.blurSod($sod);
+                }
+                else if ( e.which === 9 ) { // tab key
+                    $sod.removeClass('focus');
                 }
 
                 // "Filter" options list using keybaord based input
