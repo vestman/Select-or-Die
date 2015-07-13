@@ -144,6 +144,24 @@
             margin: 0;
         }
 
+        .sod_select .sod_list::-webkit-scrollbar {
+            -webkit-appearance: none;
+        }
+
+        .sod_select .sod_list::-webkit-scrollbar:vertical {
+            width: 11px;
+        }
+
+        .sod_select .sod_list::-webkit-scrollbar:horizontal {
+            height: 11px;
+        }
+
+        .sod_select .sod_list::-webkit-scrollbar-thumb {
+            border-radius: 8px;
+            border: 2px solid #fff; /* should match background, can't be transparent */
+            background-color: rgba(0, 0, 0, .5);
+        }         
+
         /* All the options. Keep the first three lines for truncating... */
         .sod_select .sod_option
             {
