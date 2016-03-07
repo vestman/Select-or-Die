@@ -163,7 +163,6 @@
                 });
             }, // initSoD
 
-
             populateSoD: function ($option, $sodList, $sod, $isPlaceholder) {
                 var $sodPlaceholder       = $sod.data("placeholder"),
                     $sodPlaceholderOption = $sod.data("placeholder-option"),
@@ -186,7 +185,7 @@
                         "class":      "sod_option " + $optionCustomClass + $optionIsDisabled + $optionIsSelected + $optionLink + $optionLinkExternal,
                         id:           $optionCustomId,
                         title:        $optionText,
-                        html:         $optionText,
+                        html:         _private.escapeString($optionText),
                         "data-value": $optionValue
                     }).appendTo( $sodList );
 
@@ -211,7 +210,7 @@
                     // If selected and no placeholder is set, update label,
                     // added in v.0.1.8: if the placeholder-option is set we'll update the label
                     if ( $optionIsSelected && !$sodPlaceholder || $optionIsSelected && $sodPlaceholderOption || $optionIsSelected && $sodPrefix ) {
-                        $sodLabel.append($optionText);
+                        $sodLabel.append(_private.escapeString($optionText));
                     }
 
                     // If child of an <optgroup>
@@ -234,6 +233,28 @@
                 }
             }, // populateSoD
 
+            escapeString: function($inputString) {
+                var $entityMap = {
+                	    "<": "&lt;",
+                	    ">": "&gt;",
+                	    "&": "&amp;",
+                	    '"': "&quot;",
+                	    "8364": "&#8364;",
+                	    "'": "&#39;",
+                	    '#': "&#35;",
+                	    '(': "&#40;",
+                	    ')': "&#41;",
+                	    "/": "&#x2F;"
+                };
+                
+        	return $inputString.replace(/[&<>"'\/()#]/g,
+            			function ($s)
+            			{
+            				return $entityMap[$s];
+            			}
+        			);
+        	}, // escapeString
+            
 
             focusSod: function () {
                 var $sod = $(this);
